@@ -17,6 +17,13 @@
       </list>
     </option>
   </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="importAutomatically" value="true" />
+      </MavenImportingSettings>
+    </option>
+  </component>
   <component name="ProjectId" id="1ZszTfbGyePssukcivPKupSjsf4" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -70,8 +77,44 @@
       <option name="project" value="LOCAL" />
       <updated>1585679873685</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="The project we created during the exercise&#10;//Please check if everything is okay">
+      <created>1585680387155</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1585680387155</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="1">
+          <value>
+            <State />
+          </value>
+        </entry>
+        <entry key="2">
+          <value>
+            <State />
+          </value>
+        </entry>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="OPEN_TABS">
+      <set>
+        <option value="1" />
+        <option value="2" />
+      </set>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="The project we created during the exercise&#10;//Please check if everything is okay" />
@@ -87,14 +130,14 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="395" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1280.680@0.0.1280.680" timestamp="1585679345645" />
-    <state x="198" y="0" key="CommitChangelistDialog2" timestamp="1585680353948">
+    <state x="198" y="0" key="CommitChangelistDialog2" timestamp="1585680966436">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="198" y="0" key="CommitChangelistDialog2/0.0.1280.680@0.0.1280.680" timestamp="1585680353948" />
-    <state x="421" y="84" key="FileChooserDialogImpl" timestamp="1585679937888">
+    <state x="198" y="0" key="CommitChangelistDialog2/0.0.1280.680@0.0.1280.680" timestamp="1585680966436" />
+    <state x="421" y="84" key="FileChooserDialogImpl" timestamp="1585681012364">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="421" y="84" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1585679937888" />
+    <state x="421" y="84" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1585681012364" />
     <state width="1237" height="160" key="GridCell.Tab.0.bottom" timestamp="1585680191837">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
@@ -115,14 +158,34 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="316" y="41" key="NewModule_or_Project.wizard/0.0.1280.680@0.0.1280.680" timestamp="1585679970128" />
+    <state x="441" y="53" key="RollbackChangesDialog" timestamp="1585680873710">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="441" y="53" key="RollbackChangesDialog/0.0.1280.680@0.0.1280.680" timestamp="1585680873710" />
     <state x="142" y="0" key="SettingsEditor" timestamp="1585679060357">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="142" y="0" key="SettingsEditor/0.0.1280.680@0.0.1280.680" timestamp="1585679060357" />
-    <state x="337" y="166" key="com.intellij.ide.util.TipDialog" timestamp="1585680332171">
+    <state x="233" y="75" key="Vcs.Push.Dialog.v2" timestamp="1585680569762">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="337" y="166" key="com.intellij.ide.util.TipDialog/0.0.1280.680@0.0.1280.680" timestamp="1585680332171" />
+    <state x="233" y="75" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1585680569762" />
+    <state x="337" y="166" key="com.intellij.ide.util.TipDialog" timestamp="1585680697972">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="337" y="166" key="com.intellij.ide.util.TipDialog/0.0.1280.680@0.0.1280.680" timestamp="1585680697972" />
+    <state x="334" y="72" width="612" height="536" key="find.popup" timestamp="1585681030068">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="334" y="72" width="612" height="536" key="find.popup/0.0.1280.680@0.0.1280.680" timestamp="1585681030068" />
+    <state x="448" y="208" key="org.zmlx.hg4idea.ui.HgMergeDialog" timestamp="1585681052506">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="448" y="208" key="org.zmlx.hg4idea.ui.HgMergeDialog/0.0.1280.680@0.0.1280.680" timestamp="1585681052506" />
+    <state x="526" y="271" key="org.zmlx.hg4idea.ui.HgPullDialog" timestamp="1585680982626">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="526" y="271" key="org.zmlx.hg4idea.ui.HgPullDialog/0.0.1280.680@0.0.1280.680" timestamp="1585680982626" />
     <state x="303" y="1" width="672" height="678" key="search.everywhere.popup" timestamp="1585679257604">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
@@ -134,6 +197,7 @@
     </SUITE>
   </component>
   <component name="hg4idea.settings">
+    <option name="CHECK_INCOMING_OUTGOING" value="true" />
     <option name="RECENT_HG_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="simpleUML.UMLToolWindowPlugin">
