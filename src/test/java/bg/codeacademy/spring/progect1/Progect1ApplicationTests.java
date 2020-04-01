@@ -1,7 +1,7 @@
 package bg.codeacademy.spring.progect1;
 
-import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.testng.annotations.Test;
 
 @SpringBootTest
 class Progect1ApplicationTests
