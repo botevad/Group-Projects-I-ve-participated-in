@@ -1,0 +1,21 @@
+syntax: glob
+HELP.md
+target/
+/project1.mv.db
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea/
+.idea/libraries
+*.iws
+*.iml
+*.ipr
+
