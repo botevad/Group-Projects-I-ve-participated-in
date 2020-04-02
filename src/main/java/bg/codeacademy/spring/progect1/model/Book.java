@@ -1,30 +1,36 @@
-package bg.codeacademy.spring.progect1.model;
-
+package bg.codeacademy.spring.project1.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
+@Table(name = "books")
 public class Book
 {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  private Integer id;
-  private String  title;
-  private String  author;
-  private int     year;
-  private double  price;
-  private int     availableCopies;
+  private int         id;
+  @Column(name = "title", nullable = false)
+  private String      title;
+  @Column(name = "author", nullable = false)
+  private String      author;
+  @Column(name = "year", nullable = false)
+  private int         year;
+  @Column(name = "price", nullable = false)
+  private double      price;
 
+  public Book()
+  {
+  }
 
-  public Integer getId()
+  public int getId()
   {
     return id;
   }
 
-  public Book setId(Integer id)
+  public void setId(int id)
   {
     this.id = id;
-    return this;
   }
 
   public String getTitle()
@@ -45,7 +51,6 @@ public class Book
   public void setAuthor(String author)
   {
     this.author = author;
-    return;
   }
 
   public int getYear()
@@ -68,13 +73,4 @@ public class Book
     this.price = price;
   }
 
-  public int getAvailableCopies()
-  {
-    return availableCopies;
-  }
-
-  public void setAvailableCopies(int availableCopies)
-  {
-    this.availableCopies = availableCopies;
-  }
 }
