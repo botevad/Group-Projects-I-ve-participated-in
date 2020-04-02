@@ -1,5 +1,5 @@
 package bg.codeacademy.spring.progect1.model;
-import bg.codeacademy.spring.project1.model.Book;
+import bg.codeacademy.spring.progect1.model.Book;
 
 import javax.persistence.*;
 

@@ -1,6 +1,6 @@
-package bg.codeacademy.spring.project1.repository;
+package bg.codeacademy.spring.progect1.repository;
 
-import bg.codeacademy.spring.project1.model.Book;
+import bg.codeacademy.spring.progect1.model.Book;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
