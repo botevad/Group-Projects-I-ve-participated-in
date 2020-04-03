@@ -1,11 +1,9 @@
-package bg.codeacademy.spring.progect1.service;
+package bg.codeacademy.spring.project1.service;
 
-import bg.codeacademy.spring.progect1.model.Book;
+import bg.codeacademy.spring.project1.model.Book;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public interface BookService
