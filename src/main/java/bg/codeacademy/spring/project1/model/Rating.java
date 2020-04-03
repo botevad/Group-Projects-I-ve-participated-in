@@ -1,6 +1,9 @@
 package bg.codeacademy.spring.project1.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "ratings")
@@ -9,10 +12,15 @@ public class Rating
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Integer id;
-  private Integer rating;
-  @ManyToOne(targetEntity = Book.class)
-  private Book book;
 
+  @Min(value = 1, message = "Rating should not be less than 1")
+  @Max(value = 10, message = "Rating should not be greater than 10")
+  private Integer rating;
+  
+  @ManyToOne(targetEntity = Book.class)
+  @NotNull
+  private Book book;
+  
   public Rating()
   {
   }
