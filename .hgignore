@@ -21,4 +21,5 @@ target/
 *.iws
 *.iml
 *.ipr
+*.db
 
