@@ -12,10 +12,21 @@ public class User
   private String username;
   private String password;
 
+  public Integer getId()
+  {
+    return id;
+  }
+
+  public User setId(Integer id)
+  {
+    this.id = id;
+    return this;
+  }
+
   public User() {
   }
 
-  @Column(name = "username", unique = true, nullable = false)
+ @Column(name = "username", unique = true, nullable = false)
   public String getUsername() {
     return username;
   }
@@ -32,4 +43,5 @@ public class User
   public void setPassword(String password) {
     this.password = password;
   }
+
 }

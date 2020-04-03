@@ -6,7 +6,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 
 @RepositoryRestResource(collectionResourceRel = "resumes", path = "resumes")
-public interface ResumeRepository extends JpaRepository<Comment, Integer>
+public interface CommentRepository extends JpaRepository<Comment, Integer>
 {
 
 }

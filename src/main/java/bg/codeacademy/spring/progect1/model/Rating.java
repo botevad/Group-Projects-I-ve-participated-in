@@ -1,5 +1,6 @@
 package bg.codeacademy.spring.progect1.model;
 import bg.codeacademy.spring.progect1.model.Book;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 
@@ -10,9 +11,36 @@ public class Rating
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Integer id;
+  @Value("${some.key:0}")
   private Integer rating;
   @ManyToOne(targetEntity = Book.class)
+  @JoinColumn(name = "user_id", referencedColumnName = "id")
   private Book book;
+  @OneToOne(targetEntity = User.class)
+  @JoinColumn(name = "used_id", referencedColumnName = "user")
+  private User user;
+
+  public Book getBook()
+  {
+    return book;
+  }
+
+  public Rating setBook(Book book)
+  {
+    this.book = book;
+    return this;
+  }
+
+  public User getUser()
+  {
+    return user;
+  }
+
+  public Rating setUser(User user)
+  {
+    this.user = user;
+    return this;
+  }
 
   public Rating()
   {

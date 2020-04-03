@@ -9,26 +9,24 @@ public class Book
 {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  private int         id;
+  private Integer         id;
   @Column(name = "title", nullable = false)
   private String      title;
   @Column(name = "author", nullable = false)
   private String      author;
   @Column(name = "year", nullable = false)
-  private int         year;
-  @Column(name = "price", nullable = false)
-  private double      price;
+  private Integer       year;
 
   public Book()
   {
   }
 
-  public int getId()
+  public Integer getId()
   {
     return id;
   }
 
-  public void setId(int id)
+  public void setId(Integer id)
   {
     this.id = id;
   }
@@ -61,16 +59,6 @@ public class Book
   public void setYear(int year)
   {
     this.year = year;
-  }
-
-  public double getPrice()
-  {
-    return price;
-  }
-
-  public void setPrice(double price)
-  {
-    this.price = price;
   }
 
 }
