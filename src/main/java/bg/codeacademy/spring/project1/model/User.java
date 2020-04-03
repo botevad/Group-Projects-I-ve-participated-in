@@ -13,6 +13,12 @@ public class User
   private String  password;
   private boolean isEnabled; //isEnabled will be false by default
 
+  /**
+   * We need a default constructor, otherwise we get
+   * org.springframework.orm.jpa.JpaSystemException: No default constructor for entity:  : bg.codeacademy.spring.project1.model.User
+   */
+  public User() {}
+
   //user created by Admin can have a directly approved state
   public User(boolean isEnabled)
   {
