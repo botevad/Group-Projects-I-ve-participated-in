@@ -4,14 +4,13 @@ import bg.codeacademy.spring.progect1.model.Book;
 import bg.codeacademy.spring.progect1.model.Comment;
 
 import java.util.List;
+import java.util.Stack;
 
 public interface CommentService
 {
-  void addComment(Book book, Comment comment);
+  void addComment(Integer bookId,Integer userId, Comment comment);
 
-  void editComment();
+  void deleteComment( Integer commentId);
 
-  void deleteComment();
-
-  List<Comment> getComment(Book book);
+  Stack<Comment> getComment(Book book);
 }

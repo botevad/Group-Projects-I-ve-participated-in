@@ -31,6 +31,12 @@ public class RatingServiceImpl implements RatingService
   @Override
   public Double getRating(Book book)
   {
-    return ratingRepository.findByBook(book).stream().mapToDouble(f -> f.getRating()).average().getAsDouble();
+    return null; // Work in progress
   }
+
+ /* @Override
+  public Double getRating(Book book)
+  {
+    return ratingRepository.findByBook(book).stream().mapToDouble(f -> f.getRating()).average().getAsDouble();
+  } */
 }

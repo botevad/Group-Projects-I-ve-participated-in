@@ -1,7 +1,10 @@
 package bg.codeacademy.spring.progect1.model;
+
 import bg.codeacademy.spring.progect1.model.Book;
+import bg.codeacademy.spring.progect1.model.User;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "comment")
@@ -10,18 +13,31 @@ public class Comment
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Integer id;
+  private String  content;
 
-  private String content;
 
-  @OneToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "author_id", referencedColumnName = "id")
-  private User author;
-  @ManyToOne(targetEntity = Book.class)
-  private Book book;
   @ManyToOne(targetEntity = User.class)
-  private User user;
+  @JoinColumn(name = "user_id", referencedColumnName = "id")
+  private User      user;
+  @ManyToOne(targetEntity = Book.class)
+  @JoinColumn(name = "book_id", referencedColumnName = "id")
+  private Book      book;
+  private LocalDate date;
+
+  public LocalDate getDate()
+  {
+    return date;
+  }
+
+  public void setDate()
+  {
+    this.date = LocalDate.now();
+  }
+
+
   public Comment()
   {
+
   }
 
   public Integer getId()
@@ -44,14 +60,15 @@ public class Comment
     this.content = content;
   }
 
-  public User getAuthor()
+  public Book getBook()
   {
-    return author;
+    return book;
   }
 
-  public void setAuthor(User author)
+  public void setBook(Book book)
   {
-    this.author = author;
+    this.book = book;
   }
+
 }
 
