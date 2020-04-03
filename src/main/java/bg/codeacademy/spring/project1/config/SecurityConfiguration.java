@@ -36,10 +36,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
     http
         .authorizeRequests()
         .antMatchers(HttpMethod.GET, "/api/v1/**").hasAnyRole("USER", "ADMIN") // define access control
-        .antMatchers(HttpMethod.PUT, "/api1/v1/**").hasRole("ADMIN")
-        .antMatchers(HttpMethod.POST, "/api1/v1/**").hasRole("ADMIN")
-        .antMatchers(HttpMethod.PATCH, "/api1/v1/**").hasRole("ADMIN")
-        .antMatchers(HttpMethod.DELETE, "/api1/v1/**").hasRole("ADMIN")
+        .antMatchers(HttpMethod.PUT, "/api/v1/**").hasRole("ADMIN")
+        .antMatchers(HttpMethod.POST, "/api/v1/**").hasRole("ADMIN")
+        .antMatchers(HttpMethod.PATCH, "/api/v1/**").hasRole("ADMIN")
+        .antMatchers(HttpMethod.DELETE, "/api/v1/**").hasRole("ADMIN")
         .and()
         .httpBasic();
 
