@@ -1,13 +1,12 @@
-package bg.codeacademy.spring.progect1.service;
+package bg.codeacademy.spring.project1.service;
 
 
-import bg.codeacademy.spring.progect1.model.Book;
-import bg.codeacademy.spring.progect1.model.Comment;
-import bg.codeacademy.spring.progect1.repository.CommentRepository;
+import bg.codeacademy.spring.project1.model.Comment;
+import bg.codeacademy.spring.project1.repository.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Stack;
+import java.util.List;
 
 @Service
 public class CommentServiceImpl implements CommentService
@@ -16,11 +15,10 @@ public class CommentServiceImpl implements CommentService
   private CommentRepository commentRepository;
 
   @Override
-  public void addComment(Integer bookId, Integer userId, Comment comment)
+  public void addComment(Comment comment)
   {
     this.commentRepository.save(comment);
   }
-
 
   @Override
   public void deleteComment(Integer commentId)
@@ -29,8 +27,10 @@ public class CommentServiceImpl implements CommentService
   }
 
   @Override
-  public Stack<Comment> getComment(Book book)
+  public List<Comment> getAllComments(Integer bookId)
   {
-    return commentRepository.findByBook(book);
+    return commentRepository.findAllByBook(bookId);
   }
+
+
 }

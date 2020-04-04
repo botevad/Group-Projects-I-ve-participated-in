@@ -1,4 +1,4 @@
-package bg.codeacademy.spring.progect1.dto;
+package bg.codeacademy.spring.project1.dto;
 
 public class BookDto
 {

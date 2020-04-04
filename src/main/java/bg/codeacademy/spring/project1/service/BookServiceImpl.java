@@ -1,7 +1,7 @@
-package bg.codeacademy.spring.progect1.service;
+package bg.codeacademy.spring.project1.service;
 
-import bg.codeacademy.spring.progect1.model.Book;
-import bg.codeacademy.spring.progect1.repository.BookRepository;
+import bg.codeacademy.spring.project1.model.Book;
+import bg.codeacademy.spring.project1.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,7 +1,6 @@
-package bg.codeacademy.spring.progect1.model;
+package bg.codeacademy.spring.project1.model;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "books")

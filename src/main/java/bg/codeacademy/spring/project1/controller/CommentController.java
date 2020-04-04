@@ -1,9 +1,9 @@
-package bg.codeacademy.spring.progect1.controller;
+package bg.codeacademy.spring.project1.controller;
 
 
-import bg.codeacademy.spring.progect1.model.Comment;
-import bg.codeacademy.spring.progect1.service.BookService;
-import bg.codeacademy.spring.progect1.service.CommentService;
+import bg.codeacademy.spring.project1.model.Comment;
+import bg.codeacademy.spring.project1.service.BookService;
+import bg.codeacademy.spring.project1.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

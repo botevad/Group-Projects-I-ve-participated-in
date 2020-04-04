@@ -1,7 +1,4 @@
-package bg.codeacademy.spring.progect1.model;
-
-import bg.codeacademy.spring.progect1.model.Book;
-import bg.codeacademy.spring.progect1.model.User;
+package bg.codeacademy.spring.project1.model;
 
 import javax.persistence.*;
 import java.time.LocalDate;

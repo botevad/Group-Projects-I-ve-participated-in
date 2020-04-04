@@ -1,5 +1,4 @@
-package bg.codeacademy.spring.progect1.model;
-import bg.codeacademy.spring.progect1.model.Book;
+package bg.codeacademy.spring.project1.model;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
