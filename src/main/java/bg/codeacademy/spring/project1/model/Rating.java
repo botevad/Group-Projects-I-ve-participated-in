@@ -1,38 +1,41 @@
 package bg.codeacademy.spring.project1.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 @Entity
 @Table(name = "ratings")
-public class Rating
+public class Rating extends IdEntity
 {
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  private Integer id;
 
-  @Min(value = 1, message = "Rating should not be less than 1")
-  @Max(value = 10, message = "Rating should not be greater than 10")
+
+  @Override
+  public int hashCode()
+  {
+    return Objects.hash(getUser());
+  }
+
+
+  @Column(columnDefinition = "integer default 0")
   private Integer rating;
-  
   @ManyToOne(targetEntity = Book.class)
-  @NotNull
-  private Book book;
-  
+  @JoinColumn(name = "book_id", referencedColumnName = "id")
+  private Book    book;
+
+  @OneToOne(targetEntity = User.class)
+  @JoinColumn(name = "user_id", referencedColumnName = "id")
+  private User user;
+
+
   public Rating()
   {
   }
 
-  public Integer getId()
+  public Rating(Integer rating, Book book, User user)
   {
-    return id;
-  }
-
-  public void setId(Integer id)
-  {
-    this.id = id;
+    this.rating = rating;
+    this.book = book;
+    this.user = user;
   }
 
   public Integer getRating()
@@ -43,5 +46,38 @@ public class Rating
   public void setRating(Integer rating)
   {
     this.rating = rating;
+  }
+
+  public void setBook(Book book)
+  {
+    this.book = book;
+  }
+
+  public void setUser(User user)
+  {
+    this.user = user;
+  }
+
+  public Book getBook()
+  {
+    return book;
+  }
+
+  public User getUser()
+  {
+    return user;
+  }
+
+  @Override
+  public boolean equals(Object o)
+  {
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof Rating)) {
+      return false;
+    }
+    Rating rating = (Rating) o;
+    return getUser().getId() == (rating.getUser().getId());
   }
 }

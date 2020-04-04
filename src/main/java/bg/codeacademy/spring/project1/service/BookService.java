@@ -5,33 +5,17 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 public interface BookService
 {
+  Book getBook(Integer id);
 
-  int getBookID();
-
-  String getBookName();
-
-  String getBookAuthor();
-
-  String getBookTitle();
-
-  int getBookYear();
-
-  double getBookPrice();
-
-  double getBookRating();
-
-  String getBookComments();
-
-  void addBook(Book book);
+  Book addBook(Book book);
 
   void removeBook(Integer id);
 
-  Book editBook(Integer id);
+  Book editBook(Integer id, Book book);
 
   List<Book> findAllBooks();
 
-  Book findBookByCriteria(String title, String author, int date);
+  List<Book> findBookByCriteria(String title, String author, Integer date);
 }

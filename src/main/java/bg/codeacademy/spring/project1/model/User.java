@@ -4,11 +4,8 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "users")
-public class User
+public class User extends IdEntity
 {
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  private Integer id;
   private String  username;
   private String  password;
   private boolean isEnabled; //isEnabled will be false by default
@@ -17,7 +14,9 @@ public class User
    * We need a default constructor, otherwise we get
    * org.springframework.orm.jpa.JpaSystemException: No default constructor for entity:  : bg.codeacademy.spring.project1.model.User
    */
-  public User() {}
+  public User()
+  {
+  }
 
   //user created by Admin can have a directly approved state
   public User(boolean isEnabled)
