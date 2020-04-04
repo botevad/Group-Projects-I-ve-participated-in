@@ -18,6 +18,7 @@ public interface BookService
   List<Book> findAllBooks();
 
   List<Book> findBookByCriteria(String title, String author, Integer date);
+
 }
 
 
