@@ -31,14 +31,12 @@ public class User
     return username;
   }
 
-  public void setUsername(String username)
-  {
+  public void setUsername(String username) {
     this.username = username;
   }
 
   @Column(name = "password", nullable = false)
-  public String getPassword()
-  {
+  public String getPassword() {
     return password;
   }
 
@@ -46,4 +44,5 @@ public class User
   {
     this.password = password;
   }
+
 }
