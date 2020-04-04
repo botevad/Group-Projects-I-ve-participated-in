@@ -1,36 +1,31 @@
 package bg.codeacademy.spring.project1.model;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "comment")
-public class Comment
+@Table(name = "comments")
+public class Comment extends IdEntity
 {
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  private Integer id;
-
   private String content;
 
-  @OneToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "author_id", referencedColumnName = "id")
-  private User author;
-  @ManyToOne(targetEntity = Book.class)
-  private Book book;
   @ManyToOne(targetEntity = User.class)
-  private User user;
+  @JoinColumn(name = "user_id", referencedColumnName = "id")
+  private User          user;
+  @ManyToOne(targetEntity = Book.class)
+  @JoinColumn(name = "book_id", referencedColumnName = "id")
+  private Book          book;
+  private LocalDateTime date;
+
   public Comment()
   {
+    this.date = LocalDateTime.now();
   }
 
-  public Integer getId()
+  public LocalDateTime getDate()
   {
-    return id;
-  }
-
-  public void setId(Integer id)
-  {
-    this.id = id;
+    return date;
   }
 
   public String getContent()
@@ -43,14 +38,24 @@ public class Comment
     this.content = content;
   }
 
-  public User getAuthor()
+  public Book getBook()
   {
-    return author;
+    return book;
   }
 
-  public void setAuthor(User author)
+  public void setBook(Book book)
   {
-    this.author = author;
+    this.book = book;
+  }
+
+  public User getUser()
+  {
+    return user;
+  }
+
+  public void setUser(User user)
+  {
+    this.user = user;
   }
 }
 

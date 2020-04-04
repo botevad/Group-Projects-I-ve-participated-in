@@ -5,11 +5,11 @@ import java.util.Collection;
 
 @Entity
 @Table(name = "privileges")
-public class Privilege
+public class Privilege extends IdEntity
 {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  private Long   id;
+  private Double id;
   @Column(nullable = false)
   private String name;
 
