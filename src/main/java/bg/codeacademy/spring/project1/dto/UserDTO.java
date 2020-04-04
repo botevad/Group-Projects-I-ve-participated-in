@@ -1,23 +1,11 @@
 package bg.codeacademy.spring.project1.dto;
 
+import javax.validation.constraints.NotBlank;
+
 public class UserDTO
 {
-  private int    id;
+  @NotBlank(message = "Username cannot be blank or null")
   private String username;
-
-  public UserDTO()
-  {
-  }
-
-  public int getId()
-  {
-    return id;
-  }
-
-  public void setId(int id)
-  {
-    this.id = id;
-  }
 
   public String getUsername()
   {
