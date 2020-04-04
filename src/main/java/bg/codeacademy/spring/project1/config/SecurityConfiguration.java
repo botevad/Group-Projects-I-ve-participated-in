@@ -1,20 +1,33 @@
 package bg.codeacademy.spring.project1.config;
 
+import bg.codeacademy.spring.project1.model.User;
+import bg.codeacademy.spring.project1.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 {
   //Configuration to be finished by Zornitsa Dimova
+  private UserRepository userRepo;
+
+  public SecurityConfiguration(UserRepository userRepo)
+  {
+    this.userRepo = userRepo;
+  }
 
   @Override
   protected void configure(HttpSecurity http) throws Exception
@@ -22,23 +35,30 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
     //Needs to be implemented by Zornitsa Dimova
     http
         .authorizeRequests()
-        .antMatchers("/index.html").permitAll()
-        .antMatchers("/profile/**").authenticated()
-        .antMatchers("/admin/**").hasRole("ADMIN")
-        .antMatchers("/books/**").hasAnyRole("ADMIN", "USER")
-        .antMatchers("/api/public/users").hasRole("ADMIN")
+        .antMatchers(HttpMethod.GET, "/api/v1/**").hasAnyRole("USER", "ADMIN") // define access control
+        .antMatchers(HttpMethod.GET, "/**").hasRole("ADMIN")
+        .antMatchers(HttpMethod.PUT, "/**").hasRole("ADMIN")
+        .antMatchers(HttpMethod.POST, "/**").hasRole("ADMIN")
+        .antMatchers(HttpMethod.PATCH, "/**").hasRole("ADMIN")
+        .antMatchers(HttpMethod.DELETE, "/**").hasRole("ADMIN")
         .and()
         .httpBasic();
 
-
+    // TODO do we need this?
     http.csrf().disable();
     http.headers().frameOptions().disable();
   }
-
 
   @Bean
   PasswordEncoder passwordEncoder()
   {
     return new BCryptPasswordEncoder();
+  }
+
+  @Bean
+  @Override
+  public UserDetailsService userDetailsService()
+  {
+    return new UserDetailsServiceImpl(userRepo);
   }
 }
