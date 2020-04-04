@@ -8,20 +8,23 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Stack;
 
 @RestController
 @RequestMapping("/books/{id}/comments ")
 public class CommentController
 {
+  private final CommentService commentService;
+  private final BookService    bookService;
+  private final UserController userController;
+
   @Autowired
-  private CommentService commentService;
-  @Autowired
-  private BookService    bookService;
-  @Autowired
-  private UserController userController;
+  public CommentController(CommentService commentService, BookService bookService, UserController userController)
+  {
+    this.commentService = commentService;
+    this.bookService = bookService;
+    this.userController = userController;
+  }
 
   @PostMapping()
   public void addComment(@PathVariable Integer bookId,

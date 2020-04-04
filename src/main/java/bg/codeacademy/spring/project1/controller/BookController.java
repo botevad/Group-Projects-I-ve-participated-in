@@ -20,14 +20,20 @@ import java.util.List;
 @RequestMapping("/books")
 public class BookController
 {
+
+  private final BookService    bookService;
+  private final RatingService  ratingService;
+  private final CommentService commentService;
+  private final UserService    userService;
+
   @Autowired
-  private BookService    bookService;
-  @Autowired
-  private RatingService  ratingService;
-  @Autowired
-  private CommentService commentService;
-  @Autowired
-  private UserService    userService;
+  public BookController(BookService bookService, RatingService ratingService, CommentService commentService, UserService userService)
+  {
+    this.bookService = bookService;
+    this.ratingService = ratingService;
+    this.commentService = commentService;
+    this.userService = userService;
+  }
 
 
   @GetMapping("/{id}")

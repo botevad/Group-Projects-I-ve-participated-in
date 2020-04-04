@@ -3,7 +3,6 @@ package bg.codeacademy.spring.project1.controller;
 import bg.codeacademy.spring.project1.model.Book;
 import bg.codeacademy.spring.project1.model.Rating;
 import bg.codeacademy.spring.project1.model.User;
-import bg.codeacademy.spring.project1.repository.BookRepository;
 import bg.codeacademy.spring.project1.service.BookService;
 import bg.codeacademy.spring.project1.service.RatingService;
 import bg.codeacademy.spring.project1.service.UserService;
@@ -17,12 +16,17 @@ import java.util.List;
 @RequestMapping("/ratings")
 public class RatingController
 {
+  private final RatingService ratingService;
+  private final BookService   bookService;
+  private final UserService   userService;
+
   @Autowired
-  private RatingService ratingService;
-  @Autowired
-  private BookService   bookService;
-  @Autowired
-  private UserService   userService;
+  public RatingController(RatingService ratingService, BookService bookService, UserService userService)
+  {
+    this.ratingService = ratingService;
+    this.bookService = bookService;
+    this.userService = userService;
+  }
 
   @PostMapping()
   public void addRating(@RequestParam Integer bookID, @RequestBody Rating rating, @RequestParam Integer userId)
