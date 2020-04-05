@@ -1,6 +1,6 @@
 package bg.codeacademy.spring.project1.service;
 
-import bg.codeacademy.spring.project1.dto.ChangePasswordDTO;
+import bg.codeacademy.spring.project1.dto.ChangePasswordDto;
 import bg.codeacademy.spring.project1.dto.UserDTO;
 import bg.codeacademy.spring.project1.dto.UserRegistration;
 import bg.codeacademy.spring.project1.enums.Role;
@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService
   }
 
   @Override
-  public boolean changePassword(String userName, ChangePasswordDTO changePasswordDto)
+  public boolean changePassword(String userName, ChangePasswordDto changePasswordDto)
   {
     User user = getUserEntity(userName);
     if (user != null) {
