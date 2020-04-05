@@ -7,12 +7,16 @@ import bg.codeacademy.spring.project1.service.BookService;
 import bg.codeacademy.spring.project1.service.RatingService;
 import bg.codeacademy.spring.project1.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@Validated
 @RequestMapping("/ratings")
 public class RatingController
 {
@@ -29,7 +33,7 @@ public class RatingController
   }
 
   @PostMapping()
-  public void addRating(@RequestParam Integer bookID, @RequestBody Rating rating, @RequestParam Integer userId)
+  public void addRating(@RequestParam @NotNull Integer bookID, @RequestBody @Valid Rating rating, @RequestParam @NotNull Integer userId)
   {
     Book b = bookService.getBook(bookID);
 
@@ -59,7 +63,7 @@ public class RatingController
   }
 
   @GetMapping("/{id}")
-  public Double getRating(@PathVariable Integer id)
+  public Double getRating(@PathVariable @NotNull Integer id)
 
   {
     return ratingService.getRating(bookService.getBook(id));

@@ -10,13 +10,17 @@ import bg.codeacademy.spring.project1.service.CommentService;
 import bg.codeacademy.spring.project1.service.RatingService;
 import bg.codeacademy.spring.project1.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
 
 @RestController
+@Validated
 @RequestMapping("/books")
 public class BookController
 {
@@ -37,7 +41,7 @@ public class BookController
 
 
   @GetMapping("/{id}")
-  public BookDTOWithComments getBook(@PathVariable Integer id)
+  public BookDTOWithComments getBook(@PathVariable @NotNull Integer id)
   {
     Book modelBook = bookService.getBook(id);
     BookDTOWithComments bookForClient = new BookDTOWithComments();
@@ -62,7 +66,7 @@ public class BookController
 
 
   @PostMapping()
-  public Book addBook(@RequestBody Book book)  //adding a object Book to the repo
+  public Book addBook(@RequestBody @Valid Book book)  //adding a object Book to the repo
   {
 
     return bookService.addBook(book);
@@ -71,7 +75,7 @@ public class BookController
 
 
   @DeleteMapping("/{id}")
-  public void removeBook(@PathVariable Integer id)
+  public void removeBook(@PathVariable @NotNull Integer id)
   {
     bookService.removeBook(id);
   }
@@ -105,7 +109,7 @@ public class BookController
   }
 
   @PutMapping("/edit/{id}")
-  public Book editBook(@PathVariable Integer id, @RequestBody Book book)
+  public Book editBook(@PathVariable @NotNull Integer id, @RequestBody @Valid Book book)
   {
     Book b = bookService.getBook(id);
 
@@ -118,9 +122,9 @@ public class BookController
 
 
   @GetMapping("/get-by")
-  public List<Book> findBookByCriteria(@RequestParam(required = false, defaultValue = "*") String title,
-                                       @RequestParam(required = false, defaultValue = "*") String author,
-                                       @RequestParam(required = false, defaultValue = "-1") Integer year)
+  public List<Book> findBookByCriteria(@Valid @RequestParam(required = false, defaultValue = "*") String title,
+                                       @Valid @RequestParam(required = false, defaultValue = "*") String author,
+                                       @Valid @RequestParam(required = false, defaultValue = "-1") Integer year)
   {
 
 
