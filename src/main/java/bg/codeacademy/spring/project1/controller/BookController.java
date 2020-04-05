@@ -38,8 +38,6 @@ public class BookController
     this.commentService = commentService;
     this.userService = userService;
   }
-
-
   @GetMapping("/{id}")
   public ResponseEntity<BookDTOWithComments> getBook(@PathVariable Integer id)
   {
@@ -77,7 +75,6 @@ public class BookController
 
     return ResponseEntity.ok(bookService.addBook(book));
   }
-
 
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> removeBook(@PathVariable Integer id)
@@ -121,7 +118,6 @@ public class BookController
     }
 
   }
-
 
   @PutMapping("/{id}")
   public ResponseEntity<Book> editBook(@PathVariable Integer id, @RequestBody Book book)
