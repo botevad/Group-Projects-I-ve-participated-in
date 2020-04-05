@@ -1,6 +1,7 @@
 package bg.codeacademy.spring.project1.controller;
 
-import bg.codeacademy.spring.project1.dto.ChangePasswordDto;
+import bg.codeacademy.spring.project1.dto.ChangePasswordDTO;
+import bg.codeacademy.spring.project1.dto.UserDTO;
 import bg.codeacademy.spring.project1.dto.UserRegistration;
 import bg.codeacademy.spring.project1.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -59,7 +60,7 @@ public class UsersController
 
   @RequestMapping(method = RequestMethod.POST, value = "/{user}/password")
   public @ResponseBody
-  ResponseEntity<?> changePassword(@PathVariable("user") String userName, @RequestBody ChangePasswordDto changePasswordDto, Principal principal)
+  ResponseEntity<?> changePassword(@PathVariable("user") String userName, @RequestBody ChangePasswordDTO changePasswordDto, Principal principal)
   {
     if (!userName.equals(principal.getName())) {
       return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Wrong User");
