@@ -1,6 +1,7 @@
 package bg.codeacademy.spring.progect1.controller;
 
 import bg.codeacademy.spring.project1.dto.UserDTO;
+import bg.codeacademy.spring.project1.dto.UserRegistration;
 import bg.codeacademy.spring.project1.model.User;
 import bg.codeacademy.spring.project1.service.UserService;
 import org.mockito.Mock;
@@ -26,7 +27,7 @@ public class UserControllerTest
   public Object[][] dataProviderMethod()
   {
     UserDTO userDto = new UserDTO();
-    userDto.setUsername(null);
+    userDto.username = null;
 
     return new Object[][]{
         {userDto}
@@ -34,11 +35,9 @@ public class UserControllerTest
   }
 
   //TODO
-  @Test(dataProvider = "data-provider")
-  public void addUserTest(UserDTO userDto)
-  {
-    userServiceMock.addUser(UserService.fromDto(userDto));
-  }
-
-
+//  @Test(dataProvider = "data-provider")
+//  public void addUserTest(UserRegistration userRegistration)
+//  {
+//    userServiceMock.createUser(userRegistration);
+//  }
 }
