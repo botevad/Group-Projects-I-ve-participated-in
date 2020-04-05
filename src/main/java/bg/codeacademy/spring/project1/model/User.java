@@ -6,8 +6,12 @@ import javax.persistence.*;
 @Table(name = "users")
 public class User extends IdEntity
 {
+  @Column(name = "username", unique = true, nullable = false)
   private String  username;
+  @Column(name = "password", nullable = false)
   private String  password;
+  @OneToOne
+  private Role role;
   private boolean isEnabled; //isEnabled will be false by default
 
   /**
@@ -24,18 +28,15 @@ public class User extends IdEntity
     this.isEnabled = isEnabled;
   }
 
-  @Column(name = "username", unique = true, nullable = false)
   public String getUsername()
   {
     return username;
   }
 
-  public void setUsername(String username)
-  {
+  public void setUsername(String username) {
     this.username = username;
   }
 
-  @Column(name = "password", nullable = false)
   public String getPassword()
   {
     return password;
@@ -45,4 +46,5 @@ public class User extends IdEntity
   {
     this.password = password;
   }
+
 }
