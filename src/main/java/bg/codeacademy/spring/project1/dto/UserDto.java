@@ -1,6 +1,6 @@
 package bg.codeacademy.spring.project1.dto;
 
-public class UserDto
+public class UserDTO
 {
   public String username;
 

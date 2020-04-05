@@ -1,7 +1,7 @@
 package bg.codeacademy.spring.project1.service;
 
 import bg.codeacademy.spring.project1.dto.ChangePasswordDto;
-import bg.codeacademy.spring.project1.dto.UserDto;
+import bg.codeacademy.spring.project1.dto.UserDTO;
 import bg.codeacademy.spring.project1.dto.UserRegistration;
 import bg.codeacademy.spring.project1.model.User;
 import bg.codeacademy.spring.project1.repository.UserRepository;
@@ -34,11 +34,11 @@ public class UserServiceImpl implements UserService
   }
 
   @Override
-  public UserDto getUser(String userName)
+  public UserDTO getUser(String userName)
   {
     User user = getUserEntity(userName);
     if (user != null) {
-      UserDto userDto = new UserDto();
+      UserDTO userDto = new UserDTO();
       userDto.username = userName;
       return userDto;
     }
@@ -81,12 +81,12 @@ public class UserServiceImpl implements UserService
   }
 
   @Override
-  public List<UserDto> getUsers()
+  public List<UserDTO> getUsers()
   {
     List<User> users = userRepo.findAll();
-    List<UserDto> userDtos = new ArrayList<>();
+    List<UserDTO> userDtos = new ArrayList<>();
     for (User user : users) {
-      UserDto userDto = new UserDto();
+      UserDTO userDto = new UserDTO();
       userDto.username = user.getUsername();
       userDtos.add(userDto);
     }

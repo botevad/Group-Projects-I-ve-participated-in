@@ -1,7 +1,7 @@
 package bg.codeacademy.spring.project1.service;
 
 import bg.codeacademy.spring.project1.dto.ChangePasswordDto;
-import bg.codeacademy.spring.project1.dto.UserDto;
+import bg.codeacademy.spring.project1.dto.UserDTO;
 import bg.codeacademy.spring.project1.dto.UserRegistration;
 
 import java.util.List;
@@ -13,7 +13,7 @@ public interface UserService
     OK, NOT_FOUND, BAD_CREDENTIALS
   }
 
-  public UserDto getUser(String userName);
+  public UserDTO getUser(String userName);
 
   public void createUser(UserRegistration userDto);
 
@@ -21,6 +21,6 @@ public interface UserService
 
   public boolean deleteUser(String userName);
 
-  public List<UserDto> getUsers();
+  public List<UserDTO> getUsers();
 }
 
