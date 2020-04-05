@@ -3,6 +3,7 @@ package bg.codeacademy.spring.project1.service;
 import bg.codeacademy.spring.project1.dto.ChangePasswordDTO;
 import bg.codeacademy.spring.project1.dto.UserDTO;
 import bg.codeacademy.spring.project1.dto.UserRegistration;
+import bg.codeacademy.spring.project1.enums.Role;
 import bg.codeacademy.spring.project1.model.User;
 import bg.codeacademy.spring.project1.repository.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -48,8 +49,9 @@ public class UserServiceImpl implements UserService
   @Override
   public void createUser(UserRegistration userDto)
   {
-    User user = new User(false);
+    User user = new User(true);
     user.setUsername(userDto.username);
+    user.setRole(userDto.role);
     user.setPassword(new BCryptPasswordEncoder().encode(userDto.password));
     userRepo.saveAndFlush(user);
   }
