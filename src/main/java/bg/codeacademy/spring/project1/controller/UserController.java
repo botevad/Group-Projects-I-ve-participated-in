@@ -16,8 +16,13 @@ import java.util.stream.Collectors;
 @RequestMapping("/users")
 public class UserController
 {
+  private final UserService userService;
+
   @Autowired
-  UserService userService;
+  public UserController(UserService userService)
+  {
+    this.userService = userService;
+  }
 
   @PostMapping
   public void addUser(@Valid @RequestBody UserDTO userDto)
