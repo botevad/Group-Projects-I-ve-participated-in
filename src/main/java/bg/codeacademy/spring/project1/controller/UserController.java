@@ -41,11 +41,12 @@ public class UserController
   }
 
   @RequestMapping(method = RequestMethod.PUT)
-  public ResponseEntity<?> createUser(@RequestBody() UserRegistration userRegistration)
+  public ResponseEntity<?> createUser(@Valid @RequestBody() UserRegistration userRegistration)
   {
     if (userService.getUser(userRegistration.username) != null) {
       return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();
     }
+    //Create a user with a given role
     userService.createUser(userRegistration);
     return ResponseEntity.status(HttpStatus.CREATED).build();
   }
@@ -61,7 +62,7 @@ public class UserController
 
   @RequestMapping(method = RequestMethod.POST, value = "/{user}/password")
   public @ResponseBody
-  ResponseEntity<?> changePassword(@PathVariable("user") String userName, @RequestBody ChangePasswordDTO changePasswordDto, Principal principal)
+  ResponseEntity<?> changePassword(@PathVariable("user") String userName, @Valid @RequestBody ChangePasswordDTO changePasswordDto, Principal principal)
   {
     if (!userName.equals(principal.getName()) || !userService.changePassword(userName, changePasswordDto)) {
       return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Wrong password or user name");
