@@ -10,6 +10,7 @@ import bg.codeacademy.spring.project1.service.CommentService;
 import bg.codeacademy.spring.project1.service.RatingService;
 import bg.codeacademy.spring.project1.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/books")
+@RequestMapping("/api/v1/books")
 public class BookController
 {
 
@@ -27,7 +28,10 @@ public class BookController
   private final UserService    userService;
 
   @Autowired
-  public BookController(BookService bookService, RatingService ratingService, CommentService commentService, UserService userService)
+  public BookController(BookService bookService,
+                        RatingService ratingService,
+                        CommentService commentService,
+                        UserService userService)
   {
     this.bookService = bookService;
     this.ratingService = ratingService;
@@ -37,96 +41,106 @@ public class BookController
 
 
   @GetMapping("/{id}")
-  public BookDTOWithComments getBook(@PathVariable Integer id)
+  public ResponseEntity<BookDTOWithComments> getBook(@PathVariable Integer id)
   {
-    Book modelBook = bookService.getBook(id);
-    BookDTOWithComments bookForClient = new BookDTOWithComments();
-    List<CommentDTO> comments = new ArrayList<>();
-    CommentDTO commentDTO = new CommentDTO();
-    List<Comment> c = commentService.getAllComments(modelBook.getId());
-    for (int i = 0; i < c.size(); i++) {
-      commentDTO.setAuthorName(c.get(i).getUser().getUsername());
-      commentDTO.setContent(c.get(i).getContent());
-      commentDTO.setTime(c.get(i).getDate());
-      comments.add(commentDTO);
+    if (!bookService.getBook(id).isPresent()) {
+      return ResponseEntity.notFound().build();
     }
-    bookForClient.setId(modelBook.getId());
-    bookForClient.setYearOfIssue(modelBook.getYear());
-    bookForClient.setAuthor(modelBook.getAuthor());
-    bookForClient.setTitle(modelBook.getTitle());
-    bookForClient.setRating(ratingService.getRating(modelBook));
-    bookForClient.setCommentList(comments);
+    else {
+      Book modelBook = bookService.getBook(id).get();
+      BookDTOWithComments bookForClient = new BookDTOWithComments();
+      List<CommentDTO> comments = new ArrayList<>();
+      List<Comment> c = commentService.getAllComments(modelBook);
+      for (Comment comment : c) {
+        CommentDTO commentDTO = new CommentDTO()
+            .setAuthorName(comment.getUser().getUsername())
+            .setContent(comment.getContent())
+            .setTime(comment.getDate());
+        comments.add(commentDTO);
+      }
+      bookForClient.setId(modelBook.getId())
+          .setYear(modelBook.getYear())
+          .setAuthor(modelBook.getAuthor())
+          .setTitle(modelBook.getTitle())
+          .setRating(ratingService.getRating(modelBook));
+      bookForClient.setCommentList(comments);
 
-    return bookForClient;
+      return ResponseEntity.ok(bookForClient);
+    }
   }
 
 
   @PostMapping()
-  public Book addBook(@RequestBody Book book)  //adding a object Book to the repo
+  public ResponseEntity<Book> addBook(@RequestBody Book book)  //adding a object Book to the repo
   {
+    book.setId(null);
 
-    return bookService.addBook(book);
+ return ResponseEntity.ok(bookService.addBook(book));
+}
 
-  }
 
 
   @DeleteMapping("/{id}")
-  public void removeBook(@PathVariable Integer id)
+  public ResponseEntity<Void> removeBook(@PathVariable Integer id)
   {
-    bookService.removeBook(id);
+    if (!bookService.getBook(id).isPresent() ) {
+      return ResponseEntity.badRequest().build();
+    }
+    else {
+      bookService.removeBook(id);
+      return ResponseEntity.ok().build();
+    }
   }
 
   @GetMapping()
-  public List<BookDTO> findAllBooks()
+  public ResponseEntity<List<BookDTO>> findAllBooks(
+      @RequestParam(required = false, defaultValue = "*") String title,
+      @RequestParam(required = false, defaultValue = "*") String author)
+
   {
+
     List<BookDTO> books = new ArrayList<>();
 
-    List<Book> originBooks = bookService.findAllBooks();
+    if (!bookService.findBookByCriteria(title,author).isPresent()) {
+      return ResponseEntity.notFound().build();
+    }
+    else {
+      List<Book> originBooks = bookService.findBookByCriteria(title,author).get();
 
+      for (int i = 0; i < originBooks.size(); i++) {
+        BookDTO bookDto = new BookDTO()
+            .setId(originBooks.get(i).getId())
+            .setAuthor(originBooks.get(i).getAuthor())
+            .setTitle(originBooks.get(i).getTitle())
+            .setYear(originBooks.get(i).getYear())
+            .setRating(ratingService.getRating(originBooks.get(i)))
+            .setCountComments(commentService.getAllComments(originBooks.get(i)).size());
 
-    for (int i = 0; i < originBooks.size(); i++) {
-      BookDTO bookDto = new BookDTO();
-      bookDto.setId(originBooks.get(i).getId());
-      bookDto.setAuthor(originBooks.get(i).getAuthor());
-      bookDto.setTitle(originBooks.get(i).getTitle());
-      bookDto.setYearOfIssue(originBooks.get(i).getYear());
-      bookDto.setRating(ratingService.getRating(originBooks.get(i)));
-//NULL PROBLEM !!!!
-      //bookDto.setCountComments(commentService.getAllComments(originBooks.get(i).getId()).size());
-
-
-      books.add(bookDto);
-
-
+        books.add(bookDto);
+      }
+      return ResponseEntity.ok(books);
     }
 
-
-    return books;
   }
 
-  @PutMapping("/edit/{id}")
-  public Book editBook(@PathVariable Integer id, @RequestBody Book book)
+
+
+  @PutMapping("/{id}")
+  public ResponseEntity<Book> editBook(@PathVariable Integer id, @RequestBody Book book)
   {
-    Book b = bookService.getBook(id);
+    if (!bookService.getBook(id).isPresent()) {
+      return ResponseEntity.badRequest().build();
+    }
+    else {
+      Book b = bookService.getBook(id).get();
+      b.setAuthor(book.getAuthor());
+      b.setTitle(book.getTitle());
+      b.setYear(book.getYear());
+      bookService.addBook(b);
+      return ResponseEntity.ok(b);
+    }
 
-    b.setAuthor(book.getAuthor());
-    b.setTitle(book.getTitle());
-    b.setYear(book.getYear());
-    bookService.addBook(b);
-    return b;
   }
-
-
-  @GetMapping("/get-by")
-  public List<Book> findBookByCriteria(@RequestParam(required = false, defaultValue = "*") String title,
-                                       @RequestParam(required = false, defaultValue = "*") String author,
-                                       @RequestParam(required = false, defaultValue = "-1") Integer year)
-  {
-
-
-    return bookService.findBookByCriteria(title, author, year);
-  }
-
 
 }
 
