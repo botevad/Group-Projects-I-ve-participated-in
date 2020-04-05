@@ -1,7 +1,6 @@
 package bg.codeacademy.spring.project1.service;
 
 import bg.codeacademy.spring.project1.dto.ChangePasswordDto;
-import bg.codeacademy.spring.project1.dto.UserDTO;
 import bg.codeacademy.spring.project1.dto.UserRegistration;
 
 import java.util.List;

@@ -1,7 +1,6 @@
 package bg.codeacademy.spring.project1.controller;
 
 import bg.codeacademy.spring.project1.dto.ChangePasswordDto;
-import bg.codeacademy.spring.project1.dto.UserDTO;
 import bg.codeacademy.spring.project1.dto.UserRegistration;
 import bg.codeacademy.spring.project1.service.UserService;
 import org.springframework.http.HttpStatus;
