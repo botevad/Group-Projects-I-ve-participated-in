@@ -33,7 +33,7 @@ public class BookController
                         CommentService commentService,
                         UserService userService)
   {
-    this.bookService = bookService;
+    this.bookService  = bookService;
     this.ratingService = ratingService;
     this.commentService = commentService;
     this.userService = userService;
