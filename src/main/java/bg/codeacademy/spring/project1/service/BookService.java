@@ -1,13 +1,13 @@
 package bg.codeacademy.spring.project1.service;
 
 import bg.codeacademy.spring.project1.model.Book;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface BookService
 {
-  Book getBook(Integer id);
+  Optional<Book> getBook(Integer id);
 
   Book addBook(Book book);
 
@@ -15,9 +15,9 @@ public interface BookService
 
   Book editBook(Integer id, Book book);
 
-  List<Book> findAllBooks();
+  Optional<List<Book>> findAllBooks();
 
-  List<Book> findBookByCriteria(String title, String author, Integer date);
+  Optional<List<Book>> findBookByCriteria(String title, String author);
 
 }
 
