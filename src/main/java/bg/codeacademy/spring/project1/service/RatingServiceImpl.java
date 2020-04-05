@@ -15,10 +15,10 @@ import java.util.Optional;
 public class RatingServiceImpl implements RatingService
 {
   private final RatingRepository ratingRepository;
-  private final UserRepository userRepository;
+  private final UserRepository   userRepository;
 
   @Autowired
-  public RatingServiceImpl(RatingRepository ratingRepository,UserRepository userRepository)
+  public RatingServiceImpl(RatingRepository ratingRepository, UserRepository userRepository)
   {
     this.ratingRepository = ratingRepository;
     this.userRepository = userRepository;
@@ -50,7 +50,6 @@ public class RatingServiceImpl implements RatingService
     return ratingRepository.findByBook(book);
 
   }
-
 
 
   public void deleteRating(Rating r)

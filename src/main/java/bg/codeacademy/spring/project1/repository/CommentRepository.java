@@ -12,5 +12,6 @@ import java.util.List;
 public interface CommentRepository extends JpaRepository<Comment, Integer>
 {
   void deleteById(Integer id);
+
   List<Comment> findAllByBook(Book book);
 }

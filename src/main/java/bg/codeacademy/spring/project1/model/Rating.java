@@ -9,7 +9,6 @@ public class Rating extends IdEntity
 {
 
 
-
   @Column(columnDefinition = "integer default 0")
   private Integer rating;
   @ManyToOne(targetEntity = Book.class)

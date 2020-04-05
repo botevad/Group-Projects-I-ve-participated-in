@@ -58,6 +58,6 @@ public class BookServiceImpl implements BookService
   @Override
   public Optional<List<Book>> findBookByCriteria(String title, String author)
   {
-    return  bookRepository.findByTitleContainingOrAuthorContaining(title, author);
+    return bookRepository.findByTitleContainingOrAuthorContaining(title, author);
   }
 }

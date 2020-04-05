@@ -19,6 +19,7 @@ public class CommentDTO
   public CommentDTO()
   {
   }
+
   public String getContent()
   {
     return content;
@@ -51,5 +52,4 @@ public class CommentDTO
     this.authorName = authorName;
     return this;
   }
-
 }
