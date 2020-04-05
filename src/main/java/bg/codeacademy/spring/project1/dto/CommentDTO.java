@@ -10,6 +10,39 @@ import java.time.LocalDateTime;
 
 public class CommentDTO
 {
+  public String getContent()
+  {
+    return content;
+  }
+
+  public CommentDTO setContent(String content)
+  {
+    this.content = content;
+    return this;
+  }
+
+  public LocalDateTime getTime()
+  {
+    return time;
+  }
+
+  public CommentDTO setTime(LocalDateTime time)
+  {
+    this.time = time;
+    return this;
+  }
+
+  public String getAuthorName()
+  {
+    return authorName;
+  }
+
+  public CommentDTO setAuthorName(String authorName)
+  {
+    this.authorName = authorName;
+    return this;
+  }
+
   private String        content;
   private LocalDateTime time;
   private String        authorName;
@@ -18,33 +51,4 @@ public class CommentDTO
   {
   }
 
-  public String getContent()
-  {
-    return content;
-  }
-
-  public void setContent(String content)
-  {
-    this.content = content;
-  }
-
-  public LocalDateTime getTime()
-  {
-    return time;
-  }
-
-  public void setTime(LocalDateTime time)
-  {
-    this.time = time;
-  }
-
-  public String getAuthorName()
-  {
-    return authorName;
-  }
-
-  public void setAuthorName(String authorName)
-  {
-    this.authorName = authorName;
-  }
 }

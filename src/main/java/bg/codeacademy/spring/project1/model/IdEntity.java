@@ -14,10 +14,16 @@ public abstract class IdEntity
 
   public IdEntity()
   {
+
   }
 
   public Integer getId()
   {
     return id;
+  }
+
+  public void setId(Integer id)
+  {
+    this.id = id;
   }
 }

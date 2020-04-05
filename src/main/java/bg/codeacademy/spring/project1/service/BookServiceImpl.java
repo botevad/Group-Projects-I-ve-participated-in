@@ -2,10 +2,12 @@ package bg.codeacademy.spring.project1.service;
 
 import bg.codeacademy.spring.project1.model.Book;
 import bg.codeacademy.spring.project1.repository.BookRepository;
+import org.hibernate.mapping.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BookServiceImpl implements BookService
@@ -19,9 +21,9 @@ public class BookServiceImpl implements BookService
   }
 
   @Override
-  public Book getBook(Integer id)
+  public Optional<Book> getBook(Integer id)
   {
-    return bookRepository.findById(id).get();
+    return bookRepository.findById(id);
   }
 
   @Override
@@ -39,7 +41,7 @@ public class BookServiceImpl implements BookService
   @Override
   public Book editBook(Integer id, Book book)
   {
-    Book b = getBook(id);
+    Book b = getBook(id).get();
     b.setAuthor(book.getAuthor());
     b.setTitle(book.getTitle());
     b.setYear(book.getYear());
@@ -47,15 +49,15 @@ public class BookServiceImpl implements BookService
   }
 
   @Override
-  public List<Book> findAllBooks()
+  public Optional<List<Book>> findAllBooks()
   {
-    return bookRepository.findAll();
+    Optional<List<Book>> p = Optional.of(bookRepository.findAll());
+    return p;
   }
 
   @Override
-  public List<Book> findBookByCriteria(String title, String author, Integer year)
+  public Optional<List<Book>> findBookByCriteria(String title, String author)
   {
-    List<Book> books = bookRepository.findByTitleContainingOrAuthorContainingOrYearIs(title, author, year);
-    return books;
+    return  bookRepository.findByTitleContainingOrAuthorContaining(title, author);
   }
 }
