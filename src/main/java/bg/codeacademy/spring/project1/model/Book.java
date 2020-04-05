@@ -1,36 +1,24 @@
 package bg.codeacademy.spring.project1.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "books")
-public class Book
+public class Book extends IdEntity
 {
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  private int         id;
   @Column(name = "title", nullable = false)
-  private String      title;
+  private String  title;
   @Column(name = "author", nullable = false)
-  private String      author;
+  private String  author;
   @Column(name = "year", nullable = false)
-  private int         year;
-  @Column(name = "price", nullable = false)
-  private double      price;
+  private Integer year;
 
   public Book()
   {
-  }
-
-  public int getId()
-  {
-    return id;
-  }
-
-  public void setId(int id)
-  {
-    this.id = id;
   }
 
   public String getTitle()
@@ -53,24 +41,13 @@ public class Book
     this.author = author;
   }
 
-  public int getYear()
+  public Integer getYear()
   {
     return year;
   }
 
-  public void setYear(int year)
+  public void setYear(Integer year)
   {
     this.year = year;
   }
-
-  public double getPrice()
-  {
-    return price;
-  }
-
-  public void setPrice(double price)
-  {
-    this.price = price;
-  }
-
 }
