@@ -25,8 +25,6 @@ public class BookDTOWithComments extends BookDTO
     this.commentList = commentList;
     return this;
   }
-
-
 }
 
 
