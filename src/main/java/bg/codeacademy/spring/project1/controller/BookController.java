@@ -38,8 +38,6 @@ public class BookController
     this.commentService = commentService;
     this.userService = userService;
   }
-
-
   @GetMapping("/{id}")
   public ResponseEntity<BookDTOWithComments> getBook(@PathVariable Integer id)
   {
@@ -75,15 +73,13 @@ public class BookController
   {
     book.setId(null);
 
- return ResponseEntity.ok(bookService.addBook(book));
-}
-
-
+    return ResponseEntity.ok(bookService.addBook(book));
+  }
 
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> removeBook(@PathVariable Integer id)
   {
-    if (!bookService.getBook(id).isPresent() ) {
+    if (!bookService.getBook(id).isPresent()) {
       return ResponseEntity.badRequest().build();
     }
     else {
@@ -101,11 +97,11 @@ public class BookController
 
     List<BookDTO> books = new ArrayList<>();
 
-    if (!bookService.findBookByCriteria(title,author).isPresent()) {
+    if (!bookService.findBookByCriteria(title, author).isPresent()) {
       return ResponseEntity.notFound().build();
     }
     else {
-      List<Book> originBooks = bookService.findBookByCriteria(title,author).get();
+      List<Book> originBooks = bookService.findBookByCriteria(title, author).get();
 
       for (int i = 0; i < originBooks.size(); i++) {
         BookDTO bookDto = new BookDTO()
@@ -122,8 +118,6 @@ public class BookController
     }
 
   }
-
-
 
   @PutMapping("/{id}")
   public ResponseEntity<Book> editBook(@PathVariable Integer id, @RequestBody Book book)

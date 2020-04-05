@@ -7,13 +7,15 @@ import bg.codeacademy.spring.project1.service.BookService;
 import bg.codeacademy.spring.project1.service.RatingService;
 import bg.codeacademy.spring.project1.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/ratings")
+@RequestMapping("/api/v1/ratings")
 public class RatingController
 {
   private final RatingService ratingService;
@@ -29,40 +31,36 @@ public class RatingController
   }
 
   @PostMapping()
-  public void addRating(@RequestParam Integer bookID, @RequestBody Rating rating, @RequestParam Integer userId)
+  public ResponseEntity<Void> addRating(@RequestParam Integer bookID, @RequestBody Rating rating, @RequestParam Integer userId)
   {
-    Book b = bookService.getBook(bookID);
-
-    List<Rating> r = new ArrayList<>();
-    if (!ratingService.getAllBookRating(b).isEmpty()) {
-      r = ratingService.getAllBookRating(b);
+    if (!bookService.getBook(bookID).isPresent()) {
+      return ResponseEntity.notFound().build();
     }
-    bookService.getBook(bookID);
-    Book testBook = bookService.getBook(bookID);
-    User u = userService.getUser(userId);
-    rating.setBook(testBook);
-    rating.setUser(u);
+    else {
+      Book testBook = bookService.getBook(bookID).get();
+      List<Rating> r = new ArrayList<>();
+      if (!ratingService.getAllBookRating(testBook).isEmpty()) {
+        r = ratingService.getAllBookRating(testBook);
+      }
 
-    for (int i = 0; i < r.size(); i++) {
-      if (r.get(i).getUser().equals(rating.getUser())) {
-        ratingService.deleteRating(r.get(i));
-        break;
+      User u = userService.getUser(userId);
 
+      if (ratingService.findByBookAndUser(bookID, userId).isPresent()) {
+        ratingService.findByBookAndUser(bookID, userId).get().setRating(rating.getRating());
+        return ResponseEntity.ok().build();
+      }
+      else {
+        rating.setBook(testBook);
+        rating.setUser(u);
+        ratingService.addRating(rating);
+        return ResponseEntity.ok().build();
       }
     }
 
-    rating.setBook(b);
-    rating.setUser(u);
-    ratingService.addRating(rating);
-
-
-  }
-
-  @GetMapping("/{id}")
-  public Double getRating(@PathVariable Integer id)
-
-  {
-    return ratingService.getRating(bookService.getBook(id));
 
   }
 }
+
+
+
+

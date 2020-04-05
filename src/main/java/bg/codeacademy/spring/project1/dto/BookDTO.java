@@ -92,7 +92,4 @@ public class BookDTO
     this.rating = rating;
     return this;
   }
-
-
-
 }

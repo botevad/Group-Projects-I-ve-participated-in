@@ -44,7 +44,7 @@ public class CommentController
       return ResponseEntity.notFound().build();
     }
     else {
-       User u =(User) userController.getUser(userName).getBody();
+      User u = (User) userController.getUser(userName).getBody();
       comment.setUser(u);
       comment.setBook(bookService.getBook(bookId).get());
       commentService.addComment(comment);
@@ -61,12 +61,10 @@ public class CommentController
       return ResponseEntity.notFound().build();
     }
     else {
-        b = bookService.getBook(bookId).get();
+      b = bookService.getBook(bookId).get();
       return ResponseEntity.ok(commentService.getAllComments(b));
     }
   }
-
-
 
 
   @DeleteMapping("{/id} ")

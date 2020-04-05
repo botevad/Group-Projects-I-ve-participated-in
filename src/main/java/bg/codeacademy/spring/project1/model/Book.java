@@ -8,7 +8,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "books", uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"title" ,"author"})
+    @UniqueConstraint(columnNames = {"title", "author"})
 })
 
 public class Book extends IdEntity
