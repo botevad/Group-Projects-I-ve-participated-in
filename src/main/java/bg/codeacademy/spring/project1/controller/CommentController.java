@@ -6,12 +6,17 @@ import bg.codeacademy.spring.project1.service.CommentService;
 import bg.codeacademy.spring.project1.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.executable.ValidateOnExecution;
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@Validated
 @RequestMapping("/books/{id}/comments ")
 public class CommentController
 {
@@ -28,9 +33,9 @@ public class CommentController
   }
 
   @PostMapping()
-  public void addComment(@PathVariable Integer bookId,
-                         @RequestBody Comment comment,
-                         @RequestParam Integer userId)
+  public void addComment(@PathVariable @NotNull Integer bookId,
+                         @RequestBody @Valid Comment comment,
+                         @RequestParam @NotNull Integer userId)
 
   {
     comment.setBook(bookService.getBook(bookId));
@@ -40,7 +45,7 @@ public class CommentController
   }
 
   @GetMapping()
-  public List<Comment> getAllBookComment(@PathVariable Integer bookId)
+  public List<Comment> getAllBookComment(@PathVariable @NotNull Integer bookId)
   {
     List<Comment> comments = new ArrayList<>();
     if (CollectionUtils.isEmpty(commentService.getAllComments(bookId))) {
@@ -53,7 +58,7 @@ public class CommentController
 
 
   @DeleteMapping("/{id}")
-  public void removeComment(@PathVariable Integer commentId)
+  public void removeComment(@PathVariable @NotNull Integer commentId)
   {
     commentService.deleteComment(commentId);
   }
