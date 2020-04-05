@@ -55,18 +55,17 @@ public class UserServiceImpl implements UserService
   }
 
   @Override
-  public ChangePasswordResult changePassword(String userName, ChangePasswordDTO changePasswordDto)
+  public boolean changePassword(String userName, ChangePasswordDTO changePasswordDto)
   {
     User user = getUserEntity(userName);
     if (user != null) {
       if (new BCryptPasswordEncoder().matches(changePasswordDto.oldPassword, user.getPassword())) {
         user.setPassword(new BCryptPasswordEncoder().encode(changePasswordDto.newPassword));
         userRepo.saveAndFlush(user);
-        return ChangePasswordResult.OK;
+        return true;
       }
-      return ChangePasswordResult.BAD_CREDENTIALS;
     }
-    return ChangePasswordResult.NOT_FOUND;
+    return false;
   }
 
   @Override
@@ -92,5 +91,11 @@ public class UserServiceImpl implements UserService
     }
 
     return userDtos;
+  }
+
+  @Override
+  public User getUser(Integer id)
+  {
+    return userRepo.getOne(id);
   }
 }
