@@ -94,6 +94,7 @@ public class UserServiceImpl implements UserService
     return userDtos;
   }
 
+  @Override
   public User getUser(Integer id)
   {
     return userRepo.getOne(id);
