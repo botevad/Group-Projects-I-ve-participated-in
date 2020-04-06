@@ -31,13 +31,8 @@ public class UserServiceImpl implements UserService
   public User getUser(String userName)
   {
     User user = userRepo.findUserByUsername(userName);
-    if (user.getUsername().equals(userName)) {
-      if (user.isEnabled()) {
-        return user;
-      }
-      else {
-        return null;
-      }
+    if (user != null && user.isEnabled()) {
+      return user;
     }
     return null;
   }
