@@ -1,43 +1,115 @@
 package bg.codeacademy.spring.progect1.controller;
 
-import bg.codeacademy.spring.project1.dto.UserDTO;
+import bg.codeacademy.spring.project1.Project1Application;
 import bg.codeacademy.spring.project1.dto.UserRegistration;
-import bg.codeacademy.spring.project1.model.User;
-import bg.codeacademy.spring.project1.service.UserService;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.springframework.beans.BeanUtils;
-import org.testng.Assert;
-import org.testng.annotations.BeforeTest;
+import bg.codeacademy.spring.project1.enums.Role;
+import io.restassured.RestAssured;
+import net.minidev.json.JSONObject;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.HttpStatus;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-public class UserControllerTest
-{
-  @Mock
-  private UserService userServiceMock;
 
-  @BeforeTest
-  public void setup()
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = Project1Application.class)
+@ActiveProfiles("dev")
+
+public class UserControllerTest extends AbstractTestNGSpringContextTests
+{
+  @LocalServerPort
+  int port;
+
+  @BeforeClass(alwaysRun = true, dependsOnMethods = "springTestContextPrepareTestInstance")
+  protected void setupRestAssured()
   {
-    MockitoAnnotations.initMocks(this);
+    RestAssured.port = port;
   }
 
-  @DataProvider(name = "data-provider")
+  @DataProvider(name = "user-provider")
   public Object[][] dataProviderMethod()
   {
-    UserDTO userDto = new UserDTO();
-    userDto.username = null;
+    UserRegistration admin = new UserRegistration();
+    admin.username = "admin";
+    admin.password = "123456";
+    admin.role = Role.ADMIN;
+
+    UserRegistration user = new UserRegistration();
+    user.username = "user";
+    user.password = "password";
+    user.role = Role.USER;
 
     return new Object[][]{
-        {userDto}
+        {admin, HttpStatus.OK},
+        {user, HttpStatus.UNAUTHORIZED}
     };
   }
 
-  //TODO
-//  @Test(dataProvider = "data-provider")
-//  public void addUserTest(UserRegistration userRegistration)
-//  {
-//    userServiceMock.createUser(userRegistration);
-//  }
+  @Test(dataProvider = "user-provider")
+  public void testCreateUser(UserRegistration user, HttpStatus status)
+  {
+    JSONObject userParams = new JSONObject();
+    userParams.put("password", "test");
+    userParams.put("username", "created-user");
+    userParams.put("role", "ADMIN");
+
+    RestAssured
+        .given()
+        .auth()
+        .basic(user.username, user.password)
+        .contentType("application/json")
+        .body(userParams.toJSONString())
+        .when()
+        .put("/api/v1/users")
+        .then()
+        .assertThat()
+        .statusCode(status.value());
+  }
+
+  @Test(dataProvider = "user-provider")
+  public void testGetUsers(UserRegistration user, HttpStatus status)
+  {
+    RestAssured
+        .given()
+        .auth()
+        .basic(user.username, user.password)
+        .when()
+        .get("/api/v1/users")
+        .then()
+        .assertThat()
+        .statusCode(status.value());
+  }
+
+  @Test(dataProvider = "user-provider")
+  public void testDeleteUser(UserRegistration user, HttpStatus status)
+  {
+    JSONObject userParams = new JSONObject();
+    userParams.put("password", "test");
+    userParams.put("username", "deleted-user");
+    userParams.put("role", "USER");
+
+    //create user
+    RestAssured
+        .given()
+        .auth()
+        .basic(user.username, user.password)
+        .contentType("application/json")
+        .body(userParams.toJSONString())
+        .when()
+        .put("/api/v1/users");
+    //delete the created user
+    RestAssured.given()
+        .auth()
+        .basic(user.username, user.password)
+        .pathParam("user", user.username)
+        .when()
+        .delete("/api/v1/users/{user}")
+        .then()
+        .assertThat()
+        .statusCode(status.value());
+  }
+
 }

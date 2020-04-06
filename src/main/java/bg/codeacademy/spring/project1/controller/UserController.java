@@ -17,6 +17,7 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
+@Validated
 @RestController
 @Validated
 @RequestMapping("/api/v1/users")
