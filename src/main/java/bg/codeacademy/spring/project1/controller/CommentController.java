@@ -33,7 +33,7 @@ public class CommentController
     this.userController = userController;
   }
 
-  @PostMapping()
+ /* @PostMapping()
   public ResponseEntity<Void> addComment(@PathVariable Integer bookId,
                                          @RequestBody Comment comment,
                                          @RequestParam String userName)
@@ -50,7 +50,7 @@ public class CommentController
       commentService.addComment(comment);
       return ResponseEntity.ok().build();
     }
-  }
+  } */
 
   @GetMapping()
   public ResponseEntity<List<Comment>> getAllBookComment(@PathVariable Integer bookId)
@@ -62,6 +62,8 @@ public class CommentController
     }
     else {
         b = bookService.getBook(bookId).get();
+      ResponseEntity<List<Comment>> responseEntity = ResponseEntity.ok(commentService.getAllComments(b));
+
       return ResponseEntity.ok(commentService.getAllComments(b));
     }
   }

@@ -13,11 +13,11 @@ import java.util.List;
 
 public class Book extends IdEntity
 {
-  @Column(name = "title", nullable = false)
+  @Column(nullable = false)
   private String  title;
-  @Column(name = "author", nullable = false)
+  @Column(nullable = false)
   private String  author;
-  @Column(name = "year", nullable = false)
+  @Column(nullable = false)
   private Integer year;
 
   public Book()

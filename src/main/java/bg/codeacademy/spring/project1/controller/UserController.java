@@ -1,15 +1,7 @@
 package bg.codeacademy.spring.project1.controller;
 
-import bg.codeacademy.spring.project1.dto.ChangePasswordDTO;
-import bg.codeacademy.spring.project1.dto.UserDTO;
-import bg.codeacademy.spring.project1.dto.UserRegistration;
 import bg.codeacademy.spring.project1.service.UserService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.security.Principal;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -23,7 +15,7 @@ public class UserController
     this.userService = userService;
   }
 
-  @RequestMapping(method = RequestMethod.GET)
+  /* @RequestMapping(method = RequestMethod.GET)
   public List<UserDTO> getUsers()
   {
     return userService.getUsers();
@@ -66,5 +58,5 @@ public class UserController
       return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Wrong password or user name");
     }
     return ResponseEntity.ok().build();
-  }
+  } */
 }
