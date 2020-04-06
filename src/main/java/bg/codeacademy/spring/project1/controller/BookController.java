@@ -11,13 +11,17 @@ import bg.codeacademy.spring.project1.service.RatingService;
 import bg.codeacademy.spring.project1.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
 
 @RestController
+@Validated
 @RequestMapping("/api/v1/books")
 public class BookController
 {
@@ -41,7 +45,7 @@ public class BookController
 
 
   @GetMapping("/{id}")
-  public ResponseEntity<BookDTOWithComments> getBook(@PathVariable Integer id)
+  public ResponseEntity<BookDTOWithComments> getBook(@PathVariable @NotNull Integer id)
   {
     if (!bookService.getBook(id).isPresent()) {
       return ResponseEntity.notFound().build();
@@ -71,12 +75,12 @@ public class BookController
 
 
   @PostMapping()
-  public ResponseEntity<Book> addBook(@RequestBody Book book)  //adding a object Book to the repo
+  public ResponseEntity<Book> addBook(@RequestBody @Valid Book book)  //adding a object Book to the repo
   {
     book.setId(null);
 
- return ResponseEntity.ok(bookService.addBook(book));
-}
+    return ResponseEntity.ok(bookService.addBook(book));
+  }
 
 
 
@@ -94,8 +98,8 @@ public class BookController
 
   @GetMapping()
   public ResponseEntity<List<BookDTO>> findAllBooks(
-      @RequestParam(required = false, defaultValue = "*") String title,
-      @RequestParam(required = false, defaultValue = "*") String author)
+      @Valid @RequestParam(required = false, defaultValue = "*") String title,
+      @Valid @RequestParam(required = false, defaultValue = "*") String author)
 
   {
 
@@ -124,9 +128,8 @@ public class BookController
   }
 
 
-
   @PutMapping("/{id}")
-  public ResponseEntity<Book> editBook(@PathVariable Integer id, @RequestBody Book book)
+  public ResponseEntity<Book> editBook(@PathVariable Integer id, @RequestBody @Valid Book book)
   {
     if (!bookService.getBook(id).isPresent()) {
       return ResponseEntity.badRequest().build();
