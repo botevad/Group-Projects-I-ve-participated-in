@@ -39,8 +39,8 @@ public class RatingServiceImpl implements RatingService
   @Override
   public Double getRating(Book book)
   {
-    double az = ratingRepository.findByBook(book).stream().mapToDouble(a -> a.getRating()).sum();
-    double result = az / ratingRepository.findByBook(book).size();
+    double result = (ratingRepository.findByBook(book).stream().mapToDouble(a -> a.getRating()).sum()) /
+            (ratingRepository.findByBook(book).size());
     return result;
   }
 

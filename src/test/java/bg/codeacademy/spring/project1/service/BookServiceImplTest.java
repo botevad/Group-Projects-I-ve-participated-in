@@ -19,22 +19,27 @@ import org.testng.annotations.Test;
 import java.util.Optional;
 
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class BookServiceImplTest extends AbstractTestNGSpringContextTests  {
+@SpringBootTest
+public class BookServiceImplTest  {
 
-    @LocalServerPort
-    int port;
-
-    @BeforeClass(alwaysRun = true, dependsOnMethods = "springTestContextPrepareTestInstance")
-    protected void setupRestAssured()
+    @Test
+    public void it_should_return_book()
     {
-        RestAssured.port = port;
+        Book book = new Book();
+        book.setYear(2011);
+        book.setAuthor("Ivan");
+        book.setTitle("All");
+
+        BookRepository mockito = mock(BookRepository.class);
+
+        Book savedBook = mockito.save(book);
+
+        Assert.assertEquals(savedBook.getTitle(), book.getTitle());
+
     }
 
-    public void should_add_book()
-    {
-       // RestAssured.given().queryParam().when().get().then().equals();
-    }
+
 
 }
