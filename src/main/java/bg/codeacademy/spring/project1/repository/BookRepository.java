@@ -5,10 +5,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @RepositoryRestResource(collectionResourceRel = "books", path = "books")
 public interface BookRepository extends JpaRepository<Book, Integer>
 {
-  List<Book> findByTitleContainingOrAuthorContainingOrYearIs(String title, String author, Integer year);
+
+  Optional<List<Book>> findByTitleContainingOrAuthorContaining(String title, String author);
 }

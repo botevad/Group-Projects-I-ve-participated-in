@@ -9,12 +9,6 @@ public class Rating extends IdEntity
 {
 
 
-  @Override
-  public int hashCode()
-  {
-    return Objects.hash(getUser());
-  }
-
 
   @Column(columnDefinition = "integer default 0")
   private Integer rating;
@@ -79,5 +73,11 @@ public class Rating extends IdEntity
     }
     Rating rating = (Rating) o;
     return getUser().getId() == (rating.getUser().getId());
+  }
+
+  @Override
+  public int hashCode()
+  {
+    return Objects.hash(getUser());
   }
 }

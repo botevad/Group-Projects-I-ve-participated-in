@@ -28,7 +28,7 @@ public class UserDetailsServiceImpl implements UserDetailsService
       // first start, create default admin user
       User admin = new User(true);
       admin.setUsername("admin");
-      admin.setPassword(new BCryptPasswordEncoder().encode("123456"));
+      admin.setPassword("123456");
       userRepo.saveAndFlush(admin);
       users.add(admin);
     }
@@ -36,7 +36,7 @@ public class UserDetailsServiceImpl implements UserDetailsService
       if (user.getUsername().equals(userName)) {
         org.springframework.security.core.userdetails.User.UserBuilder builder = null;
         builder = org.springframework.security.core.userdetails.User.withUsername(userName);
-        builder.password(user.getPassword());
+        builder.password(new BCryptPasswordEncoder().encode(user.getPassword()));
         builder.roles("ADMIN"); // TODO how to get the roles?
         return builder.build();
       }

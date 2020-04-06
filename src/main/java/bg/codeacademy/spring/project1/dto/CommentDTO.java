@@ -10,22 +10,15 @@ import java.time.LocalDateTime;
 
 public class CommentDTO
 {
-  private String        content;
-  private LocalDateTime time;
-  private String        authorName;
-
-  public CommentDTO()
-  {
-  }
-
   public String getContent()
   {
     return content;
   }
 
-  public void setContent(String content)
+  public CommentDTO setContent(String content)
   {
     this.content = content;
+    return this;
   }
 
   public LocalDateTime getTime()
@@ -33,18 +26,27 @@ public class CommentDTO
     return time;
   }
 
-  public void setTime(LocalDateTime time)
+  public CommentDTO setTime(LocalDateTime time)
   {
     this.time = time;
+    return this;
   }
 
-  public String getAuthorName()
-  {
-    return authorName;
+  public String getUsername() {
+    return username;
   }
 
-  public void setAuthorName(String authorName)
-  {
-    this.authorName = authorName;
+  public CommentDTO setUsername(String username) {
+    this.username = username;
+    return this;
   }
+
+  private String        content;
+  private LocalDateTime time;
+  private String        username;
+
+  public CommentDTO()
+  {
+  }
+
 }

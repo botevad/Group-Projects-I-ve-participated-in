@@ -18,6 +18,7 @@ public class Comment extends IdEntity
   private Book          book;
   private LocalDateTime date;
 
+
   public Comment()
   {
     this.date = LocalDateTime.now();

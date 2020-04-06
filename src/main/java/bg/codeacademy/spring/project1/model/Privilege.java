@@ -7,8 +7,16 @@ import java.util.Collection;
 @Table(name = "privileges")
 public class Privilege extends IdEntity
 {
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Double id;
   @Column(nullable = false)
   private String name;
+
+  @ManyToMany(targetEntity = Privilege.class)
+  private Collection<Role> roles;
+
+  @JoinColumn(name = "id", referencedColumnName = "id")
 
   public String getName()
   {
