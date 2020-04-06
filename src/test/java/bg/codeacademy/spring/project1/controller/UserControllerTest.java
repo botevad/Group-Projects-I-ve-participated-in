@@ -1,4 +1,4 @@
-package bg.codeacademy.spring.progect1.controller;
+package bg.codeacademy.spring.project1.controller;
 
 import bg.codeacademy.spring.project1.dto.UserDTO;
 import bg.codeacademy.spring.project1.dto.UserRegistration;
@@ -27,7 +27,7 @@ public class UserControllerTest
   public Object[][] dataProviderMethod()
   {
     UserDTO userDto = new UserDTO();
-    userDto.username = null;
+    // UserDTO.set
 
     return new Object[][]{
         {userDto}

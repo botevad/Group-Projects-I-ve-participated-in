@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 
@@ -43,7 +42,7 @@ public class UserController
   @RequestMapping(method = RequestMethod.PUT)
   public ResponseEntity<?> createUser(@RequestBody() UserRegistration userRegistration)
   {
-    if (userService.getUser(userRegistration.username) != null) {
+    if (userService.getUser(userRegistration.getUsername()) != null) {
       return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();
     }
     userService.createUser(userRegistration);

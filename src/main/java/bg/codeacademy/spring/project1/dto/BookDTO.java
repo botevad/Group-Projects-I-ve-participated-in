@@ -18,22 +18,13 @@ public class BookDTO
   private Integer id;
   private String  author;
   private String  title;
-  private Integer yearOfIssue;
+  private Integer year;
   private Integer countComments;
   private Double  rating;
 
+
   public BookDTO()
   {
-  }
-
-  public Double getRating()
-  {
-    return rating;
-  }
-
-  public void setRating(Double rating)
-  {
-    this.rating = rating;
   }
 
   public Integer getId()
@@ -41,9 +32,10 @@ public class BookDTO
     return id;
   }
 
-  public void setId(Integer id)
+  public BookDTO setId(Integer id)
   {
     this.id = id;
+    return this;
   }
 
   public String getAuthor()
@@ -51,9 +43,10 @@ public class BookDTO
     return author;
   }
 
-  public void setAuthor(String author)
+  public BookDTO setAuthor(String author)
   {
     this.author = author;
+    return this;
   }
 
   public String getTitle()
@@ -61,19 +54,21 @@ public class BookDTO
     return title;
   }
 
-  public void setTitle(String title)
+  public BookDTO setTitle(String title)
   {
     this.title = title;
+    return this;
   }
 
-  public Integer getYearOfIssue()
+  public Integer getYear()
   {
-    return yearOfIssue;
+    return year;
   }
 
-  public void setYearOfIssue(Integer yearOfIssue)
+  public BookDTO setYear(Integer year)
   {
-    this.yearOfIssue = yearOfIssue;
+    this.year = year;
+    return this;
   }
 
   public Integer getCountComments()
@@ -81,8 +76,23 @@ public class BookDTO
     return countComments;
   }
 
-  public void setCountComments(Integer countComments)
+  public BookDTO setCountComments(Integer countComments)
   {
     this.countComments = countComments;
+    return this;
   }
+
+  public Double getRating()
+  {
+    return rating;
+  }
+
+  public BookDTO setRating(Double rating)
+  {
+    this.rating = rating;
+    return this;
+  }
+
+
+
 }

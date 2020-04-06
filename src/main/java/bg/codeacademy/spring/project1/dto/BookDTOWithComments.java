@@ -5,14 +5,11 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class BookDTOWithComments
+public class BookDTOWithComments extends BookDTO
 {
-  private Integer          id;
-  private String           author;
-  private String           title;
-  private Integer          yearOfIssue;
+
+
   private List<CommentDTO> commentList = new ArrayList<>();
-  private Double           rating;
 
   public BookDTOWithComments()
   {
@@ -20,66 +17,15 @@ public class BookDTOWithComments
 
   public List<CommentDTO> getCommentList()
   {
-    Comparator<CommentDTO> byTime = Comparator.comparing(CommentDTO::getTime);
-
-    commentList.sort(byTime);
-    return Collections.unmodifiableList(commentList);
+    return commentList;
   }
 
-  public void setCommentList(List<CommentDTO> commentList)
+  public BookDTOWithComments setCommentList(List<CommentDTO> commentList)
   {
     this.commentList = commentList;
+    return this;
   }
 
-  public Double getRating()
-  {
-    return rating;
-  }
-
-  public void setRating(Double rating)
-  {
-    this.rating = rating;
-  }
-
-  public Integer getId()
-  {
-    return id;
-  }
-
-  public void setId(Integer id)
-  {
-    this.id = id;
-  }
-
-  public String getAuthor()
-  {
-    return author;
-  }
-
-  public void setAuthor(String author)
-  {
-    this.author = author;
-  }
-
-  public String getTitle()
-  {
-    return title;
-  }
-
-  public void setTitle(String title)
-  {
-    this.title = title;
-  }
-
-  public Integer getYearOfIssue()
-  {
-    return yearOfIssue;
-  }
-
-  public void setYearOfIssue(Integer yearOfIssue)
-  {
-    this.yearOfIssue = yearOfIssue;
-  }
 
 }
 

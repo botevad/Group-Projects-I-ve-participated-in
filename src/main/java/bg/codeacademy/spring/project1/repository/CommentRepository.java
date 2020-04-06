@@ -8,10 +8,9 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import java.util.List;
 
 
-@RepositoryRestResource(collectionResourceRel = "resumes", path = "resumes")
+@RepositoryRestResource(collectionResourceRel = "comments", path = "comments")
 public interface CommentRepository extends JpaRepository<Comment, Integer>
 {
-  void deleteById(Integer commentId);
-
-  List<Comment> findAllByBook(Integer bookId);
+  void deleteById(Integer id);
+  List<Comment> findAllByBook(Book book);
 }

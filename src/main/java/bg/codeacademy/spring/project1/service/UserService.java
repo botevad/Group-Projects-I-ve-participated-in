@@ -10,15 +10,15 @@ import java.util.List;
 public interface UserService
 {
 
-  public UserDTO getUser(String userName);
+  User getUserByUsername(String userName);
 
-  public void createUser(UserRegistration userDto);
+  void createUser(User user);
 
-  public boolean changePassword(String userName, ChangePasswordDTO changePasswordDto);
+  boolean changePassword(String userName, String password);
 
-  public boolean deleteUser(String userName);
+  // boolean deleteUser(String userName);
 
-  public List<UserDTO> getUsers();
+  List<User> getUsers();
 
-  public User getUser(Integer id);
+  User getUser(Integer id);
 }

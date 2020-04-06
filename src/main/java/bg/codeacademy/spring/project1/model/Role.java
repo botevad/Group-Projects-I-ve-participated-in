@@ -3,20 +3,20 @@ package bg.codeacademy.spring.project1.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
-import java.util.Set;
 
 @Entity
 @Table(name = "roles")
-public class Role extends IdEntity
+public class Role
 {
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  @Column(name = "id", updatable = false, nullable = false)
+  private Long             id;
   @NotNull(message = "Role name cannot be null")
-  private String                name;
+  private String           name;
   @OneToMany(targetEntity = Role.class)
   @JoinColumn(name = "id")
-  private Set<User>             users;
-  @ManyToMany(targetEntity = Role.class)
-  @JoinColumn(name = "id", referencedColumnName = "id")
-  private Collection<Privilege> privileges;
+  private Collection<User> users;
 
   public String getName()
   {
