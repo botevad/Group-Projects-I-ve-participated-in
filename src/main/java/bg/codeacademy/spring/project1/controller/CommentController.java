@@ -3,6 +3,7 @@ package bg.codeacademy.spring.project1.controller;
 import bg.codeacademy.spring.project1.model.Comment;
 import bg.codeacademy.spring.project1.service.BookService;
 import bg.codeacademy.spring.project1.service.CommentService;
+import bg.codeacademy.spring.project1.util.DetectHtml;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
