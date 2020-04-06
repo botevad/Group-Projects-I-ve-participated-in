@@ -1,11 +1,7 @@
 package bg.codeacademy.spring.project1.dto;
 
-import bg.codeacademy.spring.project1.model.Book;
-import bg.codeacademy.spring.project1.model.User;
-
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 public class CommentDTO
@@ -43,8 +39,11 @@ public class CommentDTO
     return this;
   }
 
+  @NotNull(message = "The content of the comments cannot be NULL!")
+  @Size(min = 2, max = 256, message = "Content of the comments should be between 2 and 256 characters!")
   private String        content;
   private LocalDateTime time;
+  @NotNull()
   private String        authorName;
 
   public CommentDTO()

@@ -7,6 +7,7 @@ import bg.codeacademy.spring.project1.model.User;
 import bg.codeacademy.spring.project1.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@Validated
 @RequestMapping("/api/v1/users")
 public class UserController
 {

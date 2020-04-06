@@ -1,12 +1,10 @@
 package bg.codeacademy.spring.project1.dto;
 
 
-import bg.codeacademy.spring.project1.model.Comment;
+import org.hibernate.validator.constraints.Range;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * DTO Data transfer object is an object that carries data between processes.
@@ -15,11 +13,19 @@ import java.util.List;
  */
 public class BookDTO
 {
+  @NotNull(message = "Id cannot be NULL!")
   private Integer id;
+  @NotNull(message = "Provide author's name!")
+  @Size(min = 1, max = 40, message = "The author's name - between 1 and 40 characters!")
   private String  author;
+  @NotNull(message = "Provide title!")
+  @Size(min = 1, max = 60)
   private String  title;
+  @NotNull
   private Integer year;
+  @NotNull
   private Integer countComments;
+  @Range(min = 1, max = 10)
   private Double  rating;
 
 
