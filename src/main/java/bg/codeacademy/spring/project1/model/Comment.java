@@ -1,6 +1,10 @@
 package bg.codeacademy.spring.project1.model;
 
+import bg.codeacademy.spring.project1.util.DetectHtml;
+import bg.codeacademy.spring.project1.validation.NotHtml;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -8,6 +12,7 @@ import java.time.LocalDateTime;
 @Table(name = "comments")
 public class Comment extends IdEntity
 {
+  @NotHtml
   private String content;
 
   @ManyToOne(targetEntity = User.class)
@@ -57,5 +62,6 @@ public class Comment extends IdEntity
   {
     this.user = user;
   }
+
 }
 
