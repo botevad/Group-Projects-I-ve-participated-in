@@ -4,6 +4,7 @@ package bg.codeacademy.spring.project1.service;
 import bg.codeacademy.spring.project1.dto.ChangePasswordDto;
 import bg.codeacademy.spring.project1.dto.UserDTO;
 import bg.codeacademy.spring.project1.dto.UserRegistration;
+import bg.codeacademy.spring.project1.enums.Role;
 import bg.codeacademy.spring.project1.model.User;
 
 import java.util.List;
@@ -11,15 +12,15 @@ import java.util.List;
 public interface UserService
 {
 
-  public UserDTO getUser(String userName);
+  User getUser(String userName);
 
-  public void createUser(UserRegistration userDto);
+  void createUser(String userName, String password, Role role);
 
-  public boolean changePassword(String userName, ChangePasswordDto changePasswordDto);
+  boolean changePassword(String userName, String oldPassword, String newPassword);
 
-  public boolean deleteUser(String userName);
+  boolean deleteUser(String userName);
 
-  public List<UserDTO> getUsers();
+  List<User> getUsers();
 
-  public User getUser(Integer id);
+  User getUser(Integer id);
 }
