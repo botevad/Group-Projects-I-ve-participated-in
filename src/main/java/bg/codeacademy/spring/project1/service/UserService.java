@@ -22,4 +22,6 @@ public interface UserService
   public List<UserDTO> getUsers();
 
   public User getUser(Integer id);
+
+  public List<UserRegistration> getUserRegistration();
 }
