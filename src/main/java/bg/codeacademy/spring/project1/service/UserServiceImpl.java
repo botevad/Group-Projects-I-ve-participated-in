@@ -3,7 +3,6 @@ package bg.codeacademy.spring.project1.service;
 import bg.codeacademy.spring.project1.dto.ChangePasswordDto;
 import bg.codeacademy.spring.project1.dto.UserDTO;
 import bg.codeacademy.spring.project1.dto.UserRegistration;
-import bg.codeacademy.spring.project1.enums.Role;
 import bg.codeacademy.spring.project1.model.User;
 import bg.codeacademy.spring.project1.repository.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -93,6 +92,20 @@ public class UserServiceImpl implements UserService
     }
 
     return userDtos;
+  }
+  public List<UserRegistration> getUserRegistration()
+  {
+    List<User> users = userRepo.findAll();
+    List<UserRegistration> userRegistrations = new ArrayList<>();
+    for (User user : users) {
+      UserRegistration userRegistration = new UserRegistration();
+      userRegistration.username = user.getUsername();
+      userRegistration.password = user.getPassword();
+      userRegistration.role = user.getRole();
+      userRegistrations.add(userRegistration);
+    }
+
+    return userRegistrations;
   }
 
   @Override

@@ -1,8 +1,12 @@
 package bg.codeacademy.spring.project1.config;
 
+import bg.codeacademy.spring.project1.dto.UserDTO;
+import bg.codeacademy.spring.project1.dto.UserRegistration;
 import bg.codeacademy.spring.project1.enums.Role;
 import bg.codeacademy.spring.project1.model.User;
 import bg.codeacademy.spring.project1.repository.UserRepository;
+import bg.codeacademy.spring.project1.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -13,27 +17,28 @@ import java.util.List;
 public class UserDetailsServiceImpl implements UserDetailsService
 {
 
-  private UserRepository userRepo;
+  private UserService userService;
 
-  public UserDetailsServiceImpl(UserRepository userRepo)
+  @Autowired
+  public UserDetailsServiceImpl(UserService userService)
   {
-    this.userRepo = userRepo;
+    this.userService = userService;
   }
 
   @Override
   public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException
   {
-    List<User> users = userRepo.findAll();
+    List<UserRegistration> users = userService.getUserRegistration();
     if (users.isEmpty()) {
       // first start, create default admin user
-      User admin = new User(true);
+      UserRegistration admin = new UserRegistration();
       admin.setUsername("admin");
       admin.setRole(Role.ADMIN);
       admin.setPassword(new BCryptPasswordEncoder().encode("123456"));
-      userRepo.saveAndFlush(admin);
+      userService.createUser(admin);
       users.add(admin);
     }
-    for (bg.codeacademy.spring.project1.model.User user : users) {
+    for (UserRegistration user : users) {
       if (user.getUsername().equals(userName)) {
         org.springframework.security.core.userdetails.User.UserBuilder builder = null;
         builder = org.springframework.security.core.userdetails.User.withUsername(userName);
