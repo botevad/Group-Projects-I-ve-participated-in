@@ -1,8 +1,7 @@
 package bg.codeacademy.spring.project1.config;
 
-import bg.codeacademy.spring.project1.model.User;
+import bg.codeacademy.spring.project1.enums.Role;
 import bg.codeacademy.spring.project1.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -21,7 +20,6 @@ import java.util.List;
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 {
-  //Configuration to be finished by Zornitsa Dimova
   private UserRepository userRepo;
 
   public SecurityConfiguration(UserRepository userRepo)
@@ -32,19 +30,23 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
   @Override
   protected void configure(HttpSecurity http) throws Exception
   {
-    //Needs to be implemented by Zornitsa Dimova
     http
         .authorizeRequests()
-        .antMatchers(HttpMethod.GET, "/api/v1/**").hasAnyRole("USER", "ADMIN") // define access control
-        .antMatchers(HttpMethod.GET, "/**").hasRole("ADMIN")
-        .antMatchers(HttpMethod.PUT, "/**").hasRole("ADMIN")
-        .antMatchers(HttpMethod.POST, "/**").hasRole("ADMIN")
-        .antMatchers(HttpMethod.PATCH, "/**").hasRole("ADMIN")
-        .antMatchers(HttpMethod.DELETE, "/**").hasRole("ADMIN")
-        .and()
-        .httpBasic();
+        .antMatchers(HttpMethod.GET, "/browser/index.html#/").hasAnyRole(Role.USER.toString(), Role.ADMIN.toString())
+        .antMatchers(HttpMethod.GET, "/api/v1/books/**").hasAnyRole(Role.USER.toString(), Role.ADMIN.toString())
+        .antMatchers(HttpMethod.POST, "/api/v1/books/**").hasRole(Role.ADMIN.toString())
+        .antMatchers(HttpMethod.DELETE, "/api/v1/books/**").hasRole(Role.ADMIN.toString())
 
-    // TODO do we need this?
+        .antMatchers(HttpMethod.GET, "/api/v1/ratings/**").hasAnyRole(Role.USER.toString(), Role.ADMIN.toString())
+      .antMatchers(HttpMethod.POST, "/api/v1/ratings/**").hasAnyRole(Role.USER.toString(), Role.ADMIN.toString())
+
+        .antMatchers(HttpMethod.GET, "/api/v1/users/**").hasRole(Role.ADMIN.toString())
+      .antMatchers(HttpMethod.POST, "/api/v1/users/{^[\\d]$}/password").hasAnyRole(Role.USER.toString(), Role.ADMIN.toString())
+      .antMatchers(HttpMethod.DELETE, "/api/v1/users/**").hasRole(Role.ADMIN.toString())
+      .antMatchers(HttpMethod.PUT, "/api/v1/users/**").hasRole(Role.ADMIN.toString())
+        .and()
+      .httpBasic();
+
     http.csrf().disable();
     http.headers().frameOptions().disable();
   }
@@ -62,3 +64,4 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
     return new UserDetailsServiceImpl(userRepo);
   }
 }
+

@@ -1,8 +1,8 @@
 package bg.codeacademy.spring.project1.config;
 
+import bg.codeacademy.spring.project1.enums.Role;
 import bg.codeacademy.spring.project1.model.User;
 import bg.codeacademy.spring.project1.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -28,7 +28,8 @@ public class UserDetailsServiceImpl implements UserDetailsService
       // first start, create default admin user
       User admin = new User(true);
       admin.setUsername("admin");
-      admin.setPassword("123456");
+      admin.setRole(Role.ADMIN);
+      admin.setPassword(new BCryptPasswordEncoder().encode("123456"));
       userRepo.saveAndFlush(admin);
       users.add(admin);
     }
@@ -36,8 +37,8 @@ public class UserDetailsServiceImpl implements UserDetailsService
       if (user.getUsername().equals(userName)) {
         org.springframework.security.core.userdetails.User.UserBuilder builder = null;
         builder = org.springframework.security.core.userdetails.User.withUsername(userName);
-        builder.password(new BCryptPasswordEncoder().encode(user.getPassword()));
-        builder.roles("ADMIN"); // TODO how to get the roles?
+        builder.password(user.getPassword());
+        builder.roles(user.getRole().toString());
         return builder.build();
       }
     }

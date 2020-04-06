@@ -6,12 +6,9 @@ import java.util.Collection;
 
 @Entity
 @Table(name = "roles")
-public class Role
+public class Role extends IdEntity
 {
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  @Column(name = "id", updatable = false, nullable = false)
-  private Long             id;
+
   @NotNull(message = "Role name cannot be null")
   private String           name;
   @OneToMany(targetEntity = Role.class)

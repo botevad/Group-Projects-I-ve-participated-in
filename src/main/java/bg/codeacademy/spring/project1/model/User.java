@@ -1,14 +1,21 @@
 package bg.codeacademy.spring.project1.model;
 
+import bg.codeacademy.spring.project1.enums.Role;
 import javax.persistence.*;
+
 
 @Entity
 @Table(name = "users")
 public class User extends IdEntity
 {
+  @Column(name = "username", unique = true, nullable = false)
   private String  username;
+  @Column(name = "password", nullable = false)
   private String  password;
-  private boolean isEnabled; //isEnabled will be false by default
+  @Column(name = "role", nullable = false)
+  private Role    role;
+  private boolean isEnabled; //isEnabled will be true by default, as only owner can create users
+
 
   /**
    * We need a default constructor, otherwise we get
@@ -24,7 +31,6 @@ public class User extends IdEntity
     this.isEnabled = isEnabled;
   }
 
-  @Column(name = "username", unique = true, nullable = false)
   public String getUsername()
   {
     return username;
@@ -35,7 +41,6 @@ public class User extends IdEntity
     this.username = username;
   }
 
-  @Column(name = "password", nullable = false)
   public String getPassword()
   {
     return password;
@@ -44,5 +49,15 @@ public class User extends IdEntity
   public void setPassword(String password)
   {
     this.password = password;
+  }
+
+  public Role getRole()
+  {
+    return role;
+  }
+
+  public void setRole(Role role)
+  {
+    this.role = role;
   }
 }

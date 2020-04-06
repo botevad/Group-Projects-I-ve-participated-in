@@ -1,21 +1,25 @@
 package bg.codeacademy.spring.project1.service;
 
+import bg.codeacademy.spring.project1.dto.ChangePasswordDto;
+import bg.codeacademy.spring.project1.dto.UserDTO;
+import bg.codeacademy.spring.project1.dto.UserRegistration;
 import bg.codeacademy.spring.project1.model.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserService
 {
 
-  User getUserByUsername(String userName);
+  public UserDTO getUser(String userName);
 
-  void createUser(User user);
+  public void createUser(UserRegistration userDto);
 
-  boolean changePassword(String userName, String password);
+  public boolean changePassword(String userName, ChangePasswordDto changePasswordDto);
 
-  // boolean deleteUser(String userName);
+  public boolean deleteUser(String userName);
 
-  List<User> getUsers();
+  public List<UserDTO> getUsers();
 
-  User getUser(Integer id);
+  public Optional<User> getUser(Integer id);
 }

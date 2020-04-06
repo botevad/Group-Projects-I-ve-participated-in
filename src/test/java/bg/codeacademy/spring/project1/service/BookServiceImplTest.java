@@ -2,44 +2,120 @@ package bg.codeacademy.spring.project1.service;
 
 import bg.codeacademy.spring.project1.model.Book;
 import bg.codeacademy.spring.project1.repository.BookRepository;
-import io.restassured.RestAssured;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.context.annotation.Bean;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
-import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.times;
 
-@SpringBootTest
-public class BookServiceImplTest  {
 
-    @Test
-    public void it_should_return_book()
+public class BookServiceImplTest {
+
+
+    BookRepository bookRepositoryMock = mock(BookRepository.class);
+
+    BookService bookService = new BookServiceImpl(bookRepositoryMock);
+
+    @DataProvider(name = "book-data")
+    public Object[][] dataProviderMethod()
     {
-        Book book = new Book();
-        book.setYear(2011);
-        book.setAuthor("Ivan");
-        book.setTitle("All");
+        Book book1 = new Book();
+        book1.setYear(3011);
+        book1.setId(212);
+        book1.setAuthor("Ivan");
+        book1.setTitle("sasasfga");
 
-        BookRepository mockito = mock(BookRepository.class);
+        Book book2 = new Book();
+        book2.setYear(30111);
+        book2.setId(123);
+        book2.setAuthor("Ivsagaan");
+        book2.setTitle("xx1");
 
-        Book savedBook = mockito.save(book);
+        Book book3 = new Book();
+        book3.setYear(201);
+        book3.setId(142);
+        book3.setAuthor("Ivan ss");
+        book3.setTitle("ssl");
 
-        Assert.assertEquals(savedBook.getTitle(), book.getTitle());
-
+        return new Object[][]
+                {
+                        {book1}, {book2}, {book3}
+                };
     }
 
 
+    @Test(dataProvider = "book-data")
+    public void it_should_save_book(Book book) {
+
+        Book savedBook = bookService.addBook(book);
+
+        Mockito.verify(bookRepositoryMock, times(1)).save(book);
+
+    }
+
+    @Test(dataProvider = "book-data")
+    public void it_should_remove_book(Book book)
+    {
+
+        bookService.removeBook(book.getId());
+
+        Mockito.verify(bookRepositoryMock, times(1)).deleteById(book.getId());
+    }
+
+    @Test(dataProvider = "book-data")
+    public void it_should_get_book(Book book)
+    {
+
+    Optional<Book> savedBook = bookService.getBook(book.getId());
+
+        Mockito.verify(bookRepositoryMock, times(1)).findById(book.getId());
+    }
+
+    @Test
+    public void it_should_edit_book()
+    {
+        Book book = new Book();
+        book.setId(100);
+        book.setTitle("title");
+        book.setAuthor("author");
+        book.setYear(1000);
+
+        Book newBook = new Book();
+        newBook.setYear(2019);
+        newBook.setAuthor("klllla");
+        newBook.setTitle("soaoa");
+        newBook.setId(10000);
+
+        Optional<Book> savedBook = bookService.getBook(book.getId());
+       Book someBook = savedBook.get();
+        someBook = bookService.editBook(book.getId(),newBook);
+
+        Mockito.verify(bookRepositoryMock, times(1)).findById(book.getId());
+       // Mockito.verify(book, times(0)).setId(newBook.getId());
+    }
+
+  @Test
+    public void should_get_all_books()
+  {
+
+      Optional<List<Book>> books = bookService.findAllBooks();
+
+      Mockito.verify(bookRepositoryMock, times(1)).findAll();
+  }
+
+  @Test
+    public void should_get_books_by_criteria()
+  {
+      String title = "bl";
+      String author = "bla";
+      Optional<List<Book>> books = bookService.findBookByCriteria(title, author);
+
+      Mockito.verify(bookRepositoryMock, times(1)).
+              findByTitleContainingOrAuthorContaining(title, author);
+  }
 
 }

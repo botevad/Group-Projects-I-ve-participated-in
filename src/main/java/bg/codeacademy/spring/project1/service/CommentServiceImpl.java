@@ -6,7 +6,6 @@ import bg.codeacademy.spring.project1.repository.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,12 +39,12 @@ public class CommentServiceImpl implements CommentService
     commentRepository.deleteById(commentId);
   }
 
+
+
   @Override
-  public List<Comment> getAllComments(Book book)
+  public List<Comment> getAllComments(Integer bookId)
   {
-    List<Comment> allComments = commentRepository.findAllByBook(book);
-    allComments.sort(Comparator.comparing(o -> o.getDate()));
-    return allComments;
+    return commentRepository.findAllByBookId(bookId);
   }
 }
 

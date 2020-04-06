@@ -21,12 +21,10 @@ public class BookServiceImpl implements BookService
   }
 
   @Override
-  public Optional<Book> getBook(Integer id) throws NullPointerException {
-
-      return bookRepository.findById(id);
-    }
-
-
+  public Optional<Book> getBook(Integer id)
+  {
+    return bookRepository.findById(id);
+  }
 
   @Override
   public Book addBook(Book book)
@@ -60,6 +58,6 @@ public class BookServiceImpl implements BookService
   @Override
   public Optional<List<Book>> findBookByCriteria(String title, String author)
   {
-    return  bookRepository.findByTitleContainingOrAuthorContaining(title, author);
+    return bookRepository.findByTitleContainingOrAuthorContaining(title, author);
   }
 }

@@ -1,8 +1,11 @@
 package bg.codeacademy.spring.project1.service;
 
+import bg.codeacademy.spring.project1.dto.BookDTO;
+import bg.codeacademy.spring.project1.dto.UserDTO;
 import bg.codeacademy.spring.project1.model.Book;
 import bg.codeacademy.spring.project1.model.Rating;
 import bg.codeacademy.spring.project1.model.User;
+import bg.codeacademy.spring.project1.repository.BookRepository;
 import bg.codeacademy.spring.project1.repository.RatingRepository;
 import bg.codeacademy.spring.project1.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +18,15 @@ import java.util.Optional;
 public class RatingServiceImpl implements RatingService
 {
   private final RatingRepository ratingRepository;
-  private final UserRepository userRepository;
+  private final UserRepository   userRepository;
+  private final BookRepository   bookRepository;
 
   @Autowired
-  public RatingServiceImpl(RatingRepository ratingRepository,UserRepository userRepository)
+  public RatingServiceImpl(RatingRepository ratingRepository, UserRepository userRepository, BookRepository bookRepository)
   {
     this.ratingRepository = ratingRepository;
     this.userRepository = userRepository;
+    this.bookRepository = bookRepository;
   }
 
   @Override
@@ -29,28 +34,34 @@ public class RatingServiceImpl implements RatingService
   {
     this.ratingRepository.save(rating);
 
+
   }
 
-  public Optional<Rating> findByBookAndUser(Integer bookId, Integer userId)
+  public Optional<Rating> findByBookIdAndUserId(Integer bookId, Integer userId)
   {
-    return ratingRepository.findRatingByBook_IdAndUser_Id(bookId, userId);
+    User u = userRepository.findById(userId).get();
+    Book b = bookRepository.findById(bookId).get();
+    return ratingRepository.findByBookIdAndUserId(bookId, userId);
   }
 
   @Override
   public Double getRating(Book book)
   {
-    double result = (ratingRepository.findByBook(book).stream().mapToDouble(a -> a.getRating()).sum()) /
-            (ratingRepository.findByBook(book).size());
+    System.out.println(ratingRepository.findByBook(book));
+    List<Rating> bookRating = ratingRepository.findByBook(book);
+    double az = bookRating.stream().mapToDouble(a -> a.getRating()).sum();
+    double result = az / bookRating.size();
     return result;
+
   }
 
   public List<Rating> getAllBookRating(Book book)
   {
 
+
     return ratingRepository.findByBook(book);
 
   }
-
 
 
   public void deleteRating(Rating r)
