@@ -1,4 +1,4 @@
-package bg.codeacademy.spring.progect1.controller;
+package bg.codeacademy.spring.project1.controller;
 
 import bg.codeacademy.spring.project1.Project1Application;
 import bg.codeacademy.spring.project1.dto.UserRegistration;
@@ -61,6 +61,7 @@ public class UserControllerTest extends AbstractTestNGSpringContextTests
         {user, HttpStatus.UNAUTHORIZED}
     };
   }
+
 
   @Test(dataProvider = "user-provider")
   public void testGetUsers(UserRegistration user, HttpStatus status)
