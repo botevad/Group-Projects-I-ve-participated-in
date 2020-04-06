@@ -3,12 +3,14 @@ package bg.codeacademy.spring.project1.model;
 import bg.codeacademy.spring.project1.enums.Role;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "users")
 public class User extends IdEntity
 {
   @Column(name = "username", unique = true, nullable = false)
+  @NotBlank
   private String  username;
   @Column(name = "password", nullable = false)
   private String  password;
