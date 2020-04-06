@@ -4,6 +4,7 @@ import bg.codeacademy.spring.project1.Project1Application;
 import bg.codeacademy.spring.project1.dto.UserRegistration;
 import bg.codeacademy.spring.project1.enums.Role;
 import io.restassured.RestAssured;
+import net.minidev.json.JSONObject;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
@@ -25,22 +26,7 @@ public class UserControllerTest extends AbstractTestNGSpringContextTests
   @BeforeClass(alwaysRun = true, dependsOnMethods = "springTestContextPrepareTestInstance")
   protected void setupRestAssured()
   {
-    String port = System.getProperty("server.port");
-
-    if (port == null) {
-      RestAssured.port = 8080;
-    }
-    else {
-      RestAssured.port = Integer.parseInt(port);
-    }
-
-    String baseHost = System.getProperty("server.host");
-
-    if (baseHost == null) {
-      baseHost = "http://localhost";
-    }
-
-    RestAssured.baseURI = baseHost;
+    RestAssured.port = port;
   }
 
   @DataProvider(name = "user-provider")
@@ -48,7 +34,7 @@ public class UserControllerTest extends AbstractTestNGSpringContextTests
   {
     UserRegistration admin = new UserRegistration();
     admin.username = "admin";
-    admin.password = "password";
+    admin.password = "123456";
     admin.role = Role.ADMIN;
 
     UserRegistration user = new UserRegistration();
@@ -63,10 +49,32 @@ public class UserControllerTest extends AbstractTestNGSpringContextTests
   }
 
   @Test(dataProvider = "user-provider")
+  public void testCreateUser(UserRegistration user, HttpStatus status)
+  {
+    JSONObject userParams = new JSONObject();
+    userParams.put("password", "test");
+    userParams.put("username", "created-user");
+    userParams.put("role", "ADMIN");
+
+    RestAssured
+        .given()
+        .auth()
+        .basic(user.username, user.password)
+        .contentType("application/json")
+        .body(userParams.toJSONString())
+        .when()
+        .put("/api/v1/users")
+        .then()
+        .assertThat()
+        .statusCode(status.value());
+  }
+
+  @Test(dataProvider = "user-provider")
   public void testGetUsers(UserRegistration user, HttpStatus status)
   {
     RestAssured
-        .given().auth()
+        .given()
+        .auth()
         .basic(user.username, user.password)
         .when()
         .get("/api/v1/users")
@@ -74,4 +82,34 @@ public class UserControllerTest extends AbstractTestNGSpringContextTests
         .assertThat()
         .statusCode(status.value());
   }
+
+  @Test(dataProvider = "user-provider")
+  public void testDeleteUser(UserRegistration user, HttpStatus status)
+  {
+    JSONObject userParams = new JSONObject();
+    userParams.put("password", "test");
+    userParams.put("username", "deleted-user");
+    userParams.put("role", "USER");
+
+    //create user
+    RestAssured
+        .given()
+        .auth()
+        .basic(user.username, user.password)
+        .contentType("application/json")
+        .body(userParams.toJSONString())
+        .when()
+        .put("/api/v1/users");
+    //delete the created user
+    RestAssured.given()
+        .auth()
+        .basic(user.username, user.password)
+        .pathParam("user", user.username)
+        .when()
+        .delete("/api/v1/users/{user}")
+        .then()
+        .assertThat()
+        .statusCode(status.value());
+  }
+
 }
