@@ -5,28 +5,22 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class BookDTOWithComments extends BookDTO
-{
+public class BookDTOWithComments extends BookDTO {
 
 
-  private List<CommentDTO> commentList = new ArrayList<>();
+    private List<CommentDTO> commentList = new ArrayList<>();
 
-  public BookDTOWithComments()
-  {
-  }
+    public BookDTOWithComments() {
+    }
 
-  public List<CommentDTO> getCommentList()
-  {
-    return commentList;
-  }
+    public List<CommentDTO> getCommentList() {
+        return commentList;
+    }
 
-  public BookDTOWithComments setCommentList(List<CommentDTO> commentList)
-  {
-    this.commentList = commentList;
-    return this;
-  }
-
-
+    public BookDTOWithComments setCommentList(List<CommentDTO> commentList) {
+        this.commentList = commentList;
+        return this;
+    }
 }
 
 
