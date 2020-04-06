@@ -59,4 +59,14 @@ public class User extends IdEntity
   {
     this.role = role;
   }
+
+  public void setEnabled(boolean isEnabled)
+  {
+    this.isEnabled = isEnabled;
+  }
+
+  public boolean isEnabled()
+  {
+    return isEnabled;
+  }
 }

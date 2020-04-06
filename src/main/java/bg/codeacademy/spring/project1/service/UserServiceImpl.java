@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -32,7 +33,12 @@ public class UserServiceImpl implements UserService
     List<User> users = userRepo.findAll();
     for (User user : users) {
       if (user.getUsername().equals(userName)) {
-        return user;
+        if (user.isEnabled()) {
+          return user;
+        }
+        else {
+          return null;
+        }
       }
     }
     return null;
@@ -52,7 +58,7 @@ public class UserServiceImpl implements UserService
   public boolean changePassword(String userName, String oldPassword, String newPassword)
   {
     User user = getUser(userName);
-    if (user != null) {
+    if (user != null && user.isEnabled()) {
       if (new BCryptPasswordEncoder().matches(oldPassword, user.getPassword())) {
         user.setPassword(passwordEncoder.encode(newPassword));
         userRepo.saveAndFlush(user);
@@ -67,7 +73,8 @@ public class UserServiceImpl implements UserService
   {
     User user = getUser(userName);
     if (user != null) {
-      userRepo.delete(user);
+      user.setEnabled(false);
+      userRepo.saveAndFlush(user);
       return true;
     }
     return false;
@@ -77,6 +84,13 @@ public class UserServiceImpl implements UserService
   public List<User> getUsers()
   {
     List<User> users = userRepo.findAll();
+    Iterator<User> i = users.iterator();
+    while (i.hasNext()) {
+      User user = i.next();
+      if (!user.isEnabled()) {
+        i.remove();
+      }
+    }
     return users;
   }
 
