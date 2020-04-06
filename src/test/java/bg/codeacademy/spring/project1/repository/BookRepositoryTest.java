@@ -31,3 +31,4 @@ public class BookRepositoryTest extends AbstractTestNGSpringContextTests {
         Assert.assertEquals(bookRepository.findById(book.getId()).get(), book);
     }
 }
+

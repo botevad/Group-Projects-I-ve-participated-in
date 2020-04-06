@@ -21,13 +21,11 @@ public class BookServiceImpl implements BookService
   }
 
   @Override
-  public Optional<Book> getBook(Integer id) throws NullPointerException
-  {
-    if (bookRepository.existsById(id)) {
-    return bookRepository.findById(id);
-  }
-  throw  new NullPointerException("Book not available in DB");
-  }
+  public Optional<Book> getBook(Integer id) throws NullPointerException {
+
+      return bookRepository.findById(id);
+    }
+
 
 
   @Override

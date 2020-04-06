@@ -1,10 +1,14 @@
 package bg.codeacademy.spring.project1.service;
 
+
+import bg.codeacademy.spring.project1.dto.UserDTO;
+import bg.codeacademy.spring.project1.dto.UserRegistration;
 import bg.codeacademy.spring.project1.model.User;
 import bg.codeacademy.spring.project1.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -12,10 +16,12 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepo;
 
+
     @Autowired
     public UserServiceImpl(UserRepository userRepo) {
         this.userRepo = userRepo;
     }
+
 
 
     @Override
@@ -37,15 +43,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean changePassword(String userName, String password) {
-      User user = getUserByUsername(userName);
-      if (user != null) {
-        if (password.equals(user.getPassword())) {
-          return false;
+        User user = getUserByUsername(userName);
+        if (user != null) {
+            if (password.equals(user.getPassword())) {
+                return false;
+            }
+            user.setPassword(password);
+            return true;
         }
-        user.setPassword(password);
-        return true;
-      }
-      return false;
+
+        return false;
     }
 
 
@@ -61,16 +68,18 @@ public class UserServiceImpl implements UserService {
     return false;
   } */
 
-        @Override
-        public List<User> getUsers () {
+    @Override
+    public List<User> getUsers()
+        {
             List<User> users = userRepo.findAll();
-
 
             return users;
         }
 
-        @Override
-        public User getUser (Integer id){
-            return userRepo.getOne(id);
-        }
+    @Override
+    public User getUser(Integer id) {
+        return  userRepo.getOne(id);
     }
+
+
+}
