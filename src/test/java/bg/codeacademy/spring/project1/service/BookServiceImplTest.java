@@ -75,28 +75,6 @@ public class BookServiceImplTest {
         Mockito.verify(bookRepositoryMock, times(1)).findById(book.getId());
     }
 
-    @Test
-    public void it_should_edit_book()
-    {
-        Book book = new Book();
-        book.setId(100);
-        book.setTitle("title");
-        book.setAuthor("author");
-        book.setYear(1000);
-
-        Book newBook = new Book();
-        newBook.setYear(2019);
-        newBook.setAuthor("klllla");
-        newBook.setTitle("soaoa");
-        newBook.setId(10000);
-
-        Optional<Book> savedBook = bookService.getBook(book.getId());
-       Book someBook = savedBook.get();
-        someBook = bookService.editBook(book.getId(),newBook);
-
-        Mockito.verify(bookRepositoryMock, times(1)).findById(book.getId());
-       // Mockito.verify(book, times(0)).setId(newBook.getId());
-    }
 
   @Test
     public void should_get_all_books()
