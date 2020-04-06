@@ -7,11 +7,15 @@ import bg.codeacademy.spring.project1.service.BookService;
 import bg.codeacademy.spring.project1.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @RestController
+@Validated
 @RequestMapping("/api/v1/books/{id}/comments ")
 public class CommentController
 {
@@ -30,9 +34,9 @@ public class CommentController
   }
 
   @PostMapping()
-  public ResponseEntity<Void> addComment(@PathVariable Integer bookId,
-                                         @RequestBody Comment comment,
-                                         @RequestParam String userName)
+  public ResponseEntity<Void> addComment(@PathVariable @NotNull Integer bookId,
+                                         @RequestBody @Valid Comment comment,
+                                         @RequestParam @NotNull String userName)
 
   {
     if ((!bookService.getBook(bookId).isPresent()) ||
@@ -40,7 +44,7 @@ public class CommentController
       return ResponseEntity.notFound().build();
     }
     else {
-       User u =(User) userController.getUser(userName).getBody();
+      User u = (User) userController.getUser(userName).getBody();
       comment.setUser(u);
       comment.setBook(bookService.getBook(bookId).get());
       commentService.addComment(comment);
@@ -49,7 +53,7 @@ public class CommentController
   }
 
   @GetMapping()
-  public ResponseEntity<List<Comment>> getAllBookComment(@PathVariable Integer bookId)
+  public ResponseEntity<List<Comment>> getAllBookComment(@PathVariable @NotNull Integer bookId)
   {
     Book b;
 
@@ -57,16 +61,14 @@ public class CommentController
       return ResponseEntity.notFound().build();
     }
     else {
-        b = bookService.getBook(bookId).get();
+      b = bookService.getBook(bookId).get();
       return ResponseEntity.ok(commentService.getAllComments(b));
     }
   }
 
 
-
-
   @DeleteMapping("{/id} ")
-  public ResponseEntity<Void> removeComment(@PathVariable Integer id)
+  public ResponseEntity<Void> removeComment(@PathVariable @NotNull Integer id)
   {
 
     if (!commentService.getComment(id).isPresent()) {

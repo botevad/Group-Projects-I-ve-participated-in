@@ -7,10 +7,11 @@ import bg.codeacademy.spring.project1.service.BookService;
 import bg.codeacademy.spring.project1.service.RatingService;
 import bg.codeacademy.spring.project1.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class RatingController
   }
 
   @PostMapping()
-  public ResponseEntity<Void> addRating(@RequestParam Integer bookID, @RequestBody Rating rating, @RequestParam Integer userId)
+  public ResponseEntity<Void> addRating(@RequestParam @NotNull Integer bookID, @RequestBody @Valid Rating rating, @RequestParam @NotNull Integer userId)
   {
     if (!bookService.getBook(bookID).isPresent()) {
       return ResponseEntity.notFound().build();
