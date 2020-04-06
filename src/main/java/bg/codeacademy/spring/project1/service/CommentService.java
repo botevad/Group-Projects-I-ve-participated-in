@@ -16,5 +16,5 @@ public interface CommentService
 
   void deleteComment(Integer commentId);
 
-  List<Comment> getAllComments(Book book);
+  List<Comment> getAllComments(Integer bookId);
 }

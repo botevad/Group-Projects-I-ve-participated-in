@@ -1,85 +1,77 @@
 package bg.codeacademy.spring.project1.controller;
-
 import bg.codeacademy.spring.project1.dto.UserDTO;
 import bg.codeacademy.spring.project1.model.Book;
 import bg.codeacademy.spring.project1.model.Comment;
 import bg.codeacademy.spring.project1.model.User;
 import bg.codeacademy.spring.project1.service.BookService;
 import bg.codeacademy.spring.project1.service.CommentService;
+import bg.codeacademy.spring.project1.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+
+import java.security.Principal;
 import java.util.List;
 
 @RestController
-@RequestMapping("/books/api/v1/{id}/comments ")
+@RequestMapping("/api/v1/books/comments")
 public class CommentController
 {
   private final CommentService commentService;
   private final BookService    bookService;
-  private final UserController userController;
+  private final UserService    userService;
 
   @Autowired
   public CommentController(CommentService commentService,
                            BookService bookService,
-                           UserController userController)
+                           UserService userService)
   {
     this.commentService = commentService;
     this.bookService = bookService;
-    this.userController = userController;
+    this.userService = userService;
   }
 
- /* @PostMapping()
-  public ResponseEntity<Void> addComment(@PathVariable Integer bookId,
+  @PostMapping()
+  public ResponseEntity<Void> addComment(@RequestParam Integer bookId,
                                          @RequestBody Comment comment,
-                                         @RequestParam String userName)
+                                         Principal principal)
 
   {
-    if ((!bookService.getBook(bookId).isPresent()) ||
-        (!userController.getUser(userName).hasBody())) {
+    if ((!bookService.getBook(bookId).isPresent()) ){
       return ResponseEntity.notFound().build();
     }
     else {
-       User u =(User) userController.getUser(userName).getBody();
+      UserDTO u = userService.getUser(principal.getName());
       comment.setUser(u);
       comment.setBook(bookService.getBook(bookId).get());
       commentService.addComment(comment);
       return ResponseEntity.ok().build();
     }
-  } */
+  }
 
   @GetMapping()
   public ResponseEntity<List<Comment>> getAllBookComment(@PathVariable Integer bookId)
   {
     Book b;
-
     if (!bookService.getBook(bookId).isPresent()) {
       return ResponseEntity.notFound().build();
     }
     else {
-        b = bookService.getBook(bookId).get();
-      ResponseEntity<List<Comment>> responseEntity = ResponseEntity.ok(commentService.getAllComments(b));
-
-      return ResponseEntity.ok(commentService.getAllComments(b));
+      b = bookService.getBook(bookId).get();
+      return ResponseEntity.ok(commentService.getAllComments(bookId));
     }
   }
 
 
-
-
-  @DeleteMapping("{/id} ")
-  public ResponseEntity<Void> removeComment(@PathVariable Integer id)
+  @DeleteMapping("/{commentId}")
+  public ResponseEntity<Void> removeComment(@PathVariable Integer commentId)
   {
-
-    if (!commentService.getComment(id).isPresent()) {
-      return ResponseEntity.notFound().build();
+    if (!commentService.getComment(commentId).isPresent()) {
+      return ResponseEntity.badRequest().build();
     }
     else {
-      commentService.deleteComment(id);
+      commentService.deleteComment(commentId);
       return ResponseEntity.ok().build();
     }
 

@@ -31,35 +31,36 @@ public class RatingController
   }
 
   @PostMapping()
-  public ResponseEntity<Void> addRating(@RequestParam Integer bookID, @RequestBody Rating rating, @RequestParam Integer userId)
+  public ResponseEntity<Void> addRating(@RequestParam Integer bookId, @RequestBody Rating rating, @RequestParam Integer userId)
   {
-    if (!bookService.getBook(bookID).isPresent()) {
+    Book testBook;
+    if (!bookService.getBook(bookId).isPresent() && userService.getUser(userId).isPresent()) {
       return ResponseEntity.notFound().build();
     }
     else {
-      Book testBook = bookService.getBook(bookID).get();
-      List<Rating> r = new ArrayList<>();
-      if (!ratingService.getAllBookRating(testBook).isEmpty()) {
-        r = ratingService.getAllBookRating(testBook);
-      }
-
-      User u = userService.getUser(userId);
-
-      if (ratingService.findByBookAndUser(bookID, userId).isPresent()) {
-        ratingService.findByBookAndUser(bookID, userId).get().setRating(rating.getRating());
+      testBook = bookService.getBook(bookId).get();
+      User u = userService.getUser(userId).get();
+      if (ratingService.findByBookIdAndUserId(bookId, userId).isPresent()) {
+        ratingService.findByBookIdAndUserId(bookId, userId).get().setRating(rating.getRating());
+        ratingService.addRating(ratingService.findByBookIdAndUserId(bookId, userId).get());
         return ResponseEntity.ok().build();
       }
       else {
         rating.setBook(testBook);
         rating.setUser(u);
+        rating.setRating(rating.getRating());
+
         ratingService.addRating(rating);
-        return ResponseEntity.ok().build();
       }
+
+      return ResponseEntity.ok().build();
     }
-
-
   }
 }
+
+
+
+
 
 
 

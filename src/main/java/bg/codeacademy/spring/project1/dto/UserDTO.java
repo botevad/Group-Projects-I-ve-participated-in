@@ -1,23 +1,17 @@
 package bg.codeacademy.spring.project1.dto;
 
-public class UserDTO
+import bg.codeacademy.spring.project1.model.IdEntity;
+
+public class UserDTO extends IdEntity
 {
-  private int    id;
+
   private String username;
 
   public UserDTO()
   {
+
   }
 
-  public int getId()
-  {
-    return id;
-  }
-
-  public void setId(int id)
-  {
-    this.id = id;
-  }
 
   public String getUsername()
   {

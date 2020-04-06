@@ -10,6 +10,15 @@ import java.time.LocalDateTime;
 
 public class CommentDTO
 {
+  private String        content;
+  private LocalDateTime time;
+  private String        userName;
+
+
+  public CommentDTO()
+  {
+  }
+
   public String getContent()
   {
     return content;
@@ -32,21 +41,18 @@ public class CommentDTO
     return this;
   }
 
-  public String getUsername() {
-    return username;
+  public String getUserName()
+  {
+    return userName;
   }
 
-  public CommentDTO setUsername(String username) {
-    this.username = username;
+  public CommentDTO setUserName(String userName)
+  {
+    this.userName = userName;
     return this;
   }
 
-  private String        content;
-  private LocalDateTime time;
-  private String        username;
 
-  public CommentDTO()
-  {
-  }
+
 
 }

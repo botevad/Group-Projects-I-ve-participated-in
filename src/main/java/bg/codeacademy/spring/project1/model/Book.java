@@ -1,23 +1,23 @@
 package bg.codeacademy.spring.project1.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.lang.annotation.Retention;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "books", uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"title" ,"author"})
+    @UniqueConstraint(columnNames = {"title", "author"})
 })
 
 public class Book extends IdEntity
 {
-  @Column(nullable = false)
+  @Column(name = "title", nullable = false)
   private String  title;
-  @Column(nullable = false)
+  @Column(name = "author", nullable = false)
   private String  author;
-  @Column(nullable = false)
+  @Column(name = "year", nullable = false)
   private Integer year;
 
   public Book()
@@ -29,9 +29,10 @@ public class Book extends IdEntity
     return title;
   }
 
-  public void setTitle(String title)
+  public Book setTitle(String title)
   {
     this.title = title;
+    return this;
   }
 
   public String getAuthor()
@@ -39,9 +40,10 @@ public class Book extends IdEntity
     return author;
   }
 
-  public void setAuthor(String author)
+  public Book setAuthor(String author)
   {
     this.author = author;
+    return this;
   }
 
   public Integer getYear()
@@ -49,8 +51,9 @@ public class Book extends IdEntity
     return year;
   }
 
-  public void setYear(Integer year)
+  public Book setYear(Integer year)
   {
     this.year = year;
+    return this;
   }
 }

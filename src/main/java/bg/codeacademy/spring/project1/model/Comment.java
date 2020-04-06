@@ -1,5 +1,7 @@
 package bg.codeacademy.spring.project1.model;
 
+import bg.codeacademy.spring.project1.dto.UserDTO;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -10,12 +12,12 @@ public class Comment extends IdEntity
 {
   private String content;
 
-  @ManyToOne(targetEntity = User.class)
+  @OneToOne (targetEntity = User.class)
   @JoinColumn(name = "user_id", referencedColumnName = "id")
-  private User          user;
-  @ManyToOne(targetEntity = Book.class)
+  private UserDTO user;
+  @OneToOne(targetEntity = Book.class)
   @JoinColumn(name = "book_id", referencedColumnName = "id")
-  private Book          book;
+  private Book    book;
   private LocalDateTime date;
 
 
@@ -49,12 +51,12 @@ public class Comment extends IdEntity
     this.book = book;
   }
 
-  public User getUser()
+  public UserDTO getUser()
   {
     return user;
   }
 
-  public void setUser(User user)
+  public void setUser(UserDTO user)
   {
     this.user = user;
   }
