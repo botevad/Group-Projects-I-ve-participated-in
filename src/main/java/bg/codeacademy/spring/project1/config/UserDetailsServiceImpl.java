@@ -1,8 +1,6 @@
 package bg.codeacademy.spring.project1.config;
 
 import bg.codeacademy.spring.project1.enums.Role;
-import bg.codeacademy.spring.project1.model.User;
-import bg.codeacademy.spring.project1.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

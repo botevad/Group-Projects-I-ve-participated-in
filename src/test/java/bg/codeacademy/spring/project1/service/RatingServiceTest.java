@@ -2,18 +2,12 @@ package bg.codeacademy.spring.project1.service;
 
 import bg.codeacademy.spring.project1.model.Book;
 import bg.codeacademy.spring.project1.model.Rating;
-import bg.codeacademy.spring.project1.model.User;
 import bg.codeacademy.spring.project1.repository.BookRepository;
 import bg.codeacademy.spring.project1.repository.RatingRepository;
-import bg.codeacademy.spring.project1.repository.UserRepository;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
-import javax.xml.crypto.Data;
 
 import java.util.List;
 import java.util.Optional;

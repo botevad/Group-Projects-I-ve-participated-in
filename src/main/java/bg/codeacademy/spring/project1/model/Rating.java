@@ -1,7 +1,5 @@
 package bg.codeacademy.spring.project1.model;
 
-import bg.codeacademy.spring.project1.dto.UserDTO;
-
 import javax.persistence.*;
 import java.util.Objects;
 

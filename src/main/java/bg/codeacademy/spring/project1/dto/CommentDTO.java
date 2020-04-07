@@ -1,11 +1,5 @@
 package bg.codeacademy.spring.project1.dto;
 
-import bg.codeacademy.spring.project1.model.Book;
-import bg.codeacademy.spring.project1.model.User;
-
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import java.time.LocalDateTime;
 
 public class CommentDTO

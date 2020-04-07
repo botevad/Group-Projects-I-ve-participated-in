@@ -1,10 +1,7 @@
 package bg.codeacademy.spring.project1.service;
 
-import bg.codeacademy.spring.project1.dto.UserDTO;
 import bg.codeacademy.spring.project1.model.Book;
 import bg.codeacademy.spring.project1.model.Comment;
-import bg.codeacademy.spring.project1.model.User;
-import bg.codeacademy.spring.project1.repository.BookRepository;
 import bg.codeacademy.spring.project1.repository.CommentRepository;
 import org.mockito.Mockito;
 import org.testng.annotations.DataProvider;
