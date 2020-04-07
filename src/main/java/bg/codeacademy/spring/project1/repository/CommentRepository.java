@@ -11,6 +11,7 @@ import java.util.List;
 @RepositoryRestResource(collectionResourceRel = "comments", path = "comments")
 public interface CommentRepository extends JpaRepository<Comment, Integer>
 {
-  void deleteById(Integer id);
-  List<Comment> findAllByBook(Book book);
+  void deleteById(Integer commentId);
+
+  List<Comment> findAllByBookId(Integer bookId);
 }

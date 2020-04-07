@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService
@@ -88,8 +89,8 @@ public class UserServiceImpl implements UserService
   }
 
   @Override
-  public User getUser(Integer id)
+  public Optional<User> getUser(Integer id)
   {
-    return userRepo.getOne(id);
+    return userRepo.findById(id);
   }
 }

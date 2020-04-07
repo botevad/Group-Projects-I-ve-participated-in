@@ -8,6 +8,7 @@ import bg.codeacademy.spring.project1.enums.Role;
 import bg.codeacademy.spring.project1.model.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserService
 {
@@ -22,5 +23,5 @@ public interface UserService
 
   List<User> getUsers();
 
-  User getUser(Integer id);
+  Optional<User> getUser(Integer id);
 }

@@ -26,7 +26,7 @@ public class CommentDTOTest {
   @Test
   public void testCommentNull(){
     CommentDTO commentDTO= new CommentDTO();
-    commentDTO.setAuthorName(null);
+    commentDTO.setUserName(null);
     commentDTO.setContent(null);
     Set<ConstraintViolation<CommentDTO>> violations= validator.validate(commentDTO);
     Assert.assertFalse(violations.isEmpty());
@@ -35,7 +35,7 @@ public class CommentDTOTest {
   @Test
   public void testCommentInvalid(){
     CommentDTO commentDTO= new CommentDTO();
-    commentDTO.setAuthorName("d");
+    commentDTO.setUserName("d");
     commentDTO.setContent("a");
     Set<ConstraintViolation<CommentDTO>> violations= validator.validate(commentDTO);
     Assert.assertFalse(violations.isEmpty());

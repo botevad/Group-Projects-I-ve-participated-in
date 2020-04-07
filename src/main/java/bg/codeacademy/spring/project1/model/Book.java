@@ -1,30 +1,23 @@
 package bg.codeacademy.spring.project1.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import java.lang.annotation.Retention;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "books", uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"title" ,"author"})
+    @UniqueConstraint(columnNames = {"title", "author"})
 })
 
 public class Book extends IdEntity
 {
   @Column(name = "title", nullable = false)
-  @NotEmpty(message = "Provide title!")
-  @Size(min = 2, max = 60, message = "Title between 1 and 60 characters")
   private String  title;
   @Column(name = "author", nullable = false)
-  @NotEmpty(message = "Provide author's name!")
-  @Size(min = 2, max = 40, message = "The author's name - between 1 and 40 characters!")
   private String  author;
   @Column(name = "year", nullable = false)
-  @NotNull(message = "Provide year!")
-  @Positive(message = "Provide positive year!")
   private Integer year;
 
   public Book()
@@ -36,9 +29,10 @@ public class Book extends IdEntity
     return title;
   }
 
-  public void setTitle(String title)
+  public Book setTitle(String title)
   {
     this.title = title;
+    return this;
   }
 
   public String getAuthor()
@@ -46,9 +40,10 @@ public class Book extends IdEntity
     return author;
   }
 
-  public void setAuthor(String author)
+  public Book setAuthor(String author)
   {
     this.author = author;
+    return this;
   }
 
   public Integer getYear()
@@ -56,8 +51,9 @@ public class Book extends IdEntity
     return year;
   }
 
-  public void setYear(Integer year)
+  public Book setYear(Integer year)
   {
     this.year = year;
+    return this;
   }
 }
