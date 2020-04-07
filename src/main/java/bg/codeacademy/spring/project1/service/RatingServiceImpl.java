@@ -33,21 +33,16 @@ public class RatingServiceImpl implements RatingService
   public void addRating(Rating rating)
   {
     this.ratingRepository.save(rating);
-
-
   }
 
   public Optional<Rating> findByBookIdAndUserId(Integer bookId, Integer userId)
   {
-    User u = userRepository.findById(userId).get();
-    Book b = bookRepository.findById(bookId).get();
     return ratingRepository.findByBookIdAndUserId(bookId, userId);
   }
 
   @Override
   public Double getRating(Book book)
   {
-    System.out.println(ratingRepository.findByBook(book));
     List<Rating> bookRating = ratingRepository.findByBook(book);
     double az = bookRating.stream().mapToDouble(a -> a.getRating()).sum();
     double result = az / bookRating.size();

@@ -13,7 +13,7 @@ public class Rating extends IdEntity
 
   @Column(columnDefinition = "integer default 0")
   private Integer rating;
-  @OneToOne(targetEntity = Book.class)
+  @ManyToOne(targetEntity = Book.class)
   @JoinColumn(name = "book_id", referencedColumnName = "id")
   private Book    book;
 

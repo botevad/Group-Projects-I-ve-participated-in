@@ -15,18 +15,18 @@ public class BookDTOWithComments extends BookDTO
   {
   }
 
-  public List<CommentDTO> getCommentList()
-  {
+  public List<CommentDTO> getCommentList() {
     Comparator<CommentDTO> comparatorByTime = (a, b) -> b.getTime().compareTo(a.getTime());
     commentList.sort(comparatorByTime);
     return
-        Collections.unmodifiableList(commentList);
+            Collections.unmodifiableList(commentList);
   }
 
-  public void setCommentList(List<CommentDTO> commentList)
-  {
+  public BookDTOWithComments setCommentList(List<CommentDTO> commentList) {
     this.commentList = commentList;
+    return this;
   }
+
 }
 
 
