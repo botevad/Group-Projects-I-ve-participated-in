@@ -1,9 +1,8 @@
 package bg.codeacademy.spring.project1.model;
 
-import org.hibernate.validator.constraints.Range;
+import bg.codeacademy.spring.project1.dto.UserDTO;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Entity
@@ -12,12 +11,9 @@ public class Rating extends IdEntity
 {
 
 
-
   @Column(columnDefinition = "integer default 0")
-  @NotNull
-  @Range(min = 1, max = 10)
   private Integer rating;
-  @ManyToOne(targetEntity = Book.class)
+  @OneToOne(targetEntity = Book.class)
   @JoinColumn(name = "book_id", referencedColumnName = "id")
   private Book    book;
 

@@ -39,11 +39,12 @@ public class CommentServiceImpl implements CommentService
     commentRepository.deleteById(commentId);
   }
 
-  @Override
-  public List<Comment> getAllComments(Book book)
-  {
 
-    return commentRepository.findAllByBook(book);
+
+  @Override
+  public List<Comment> getAllComments(Integer bookId)
+  {
+    return commentRepository.findAllByBookId(bookId);
   }
 }
 
