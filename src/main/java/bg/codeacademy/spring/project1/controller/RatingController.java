@@ -2,17 +2,11 @@ package bg.codeacademy.spring.project1.controller;
 
 import bg.codeacademy.spring.project1.model.Book;
 import bg.codeacademy.spring.project1.model.Rating;
-import bg.codeacademy.spring.project1.model.User;
 import bg.codeacademy.spring.project1.service.BookService;
 import bg.codeacademy.spring.project1.service.RatingService;
-import bg.codeacademy.spring.project1.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/ratings")

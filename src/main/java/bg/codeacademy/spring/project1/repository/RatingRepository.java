@@ -2,9 +2,7 @@ package bg.codeacademy.spring.project1.repository;
 
 import bg.codeacademy.spring.project1.model.Book;
 import bg.codeacademy.spring.project1.model.Rating;
-import bg.codeacademy.spring.project1.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import java.util.List;
