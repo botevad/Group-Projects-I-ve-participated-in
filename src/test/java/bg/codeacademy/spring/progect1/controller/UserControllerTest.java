@@ -48,7 +48,26 @@ public class UserControllerTest extends AbstractTestNGSpringContextTests
     };
   }
 
-  @Test(dataProvider = "user-provider")
+  @DataProvider(name = "create-user-provider")
+  public Object[][] dataCreateProviderMethod()
+  {
+    UserRegistration admin = new UserRegistration();
+    admin.username = "admin";
+    admin.password = "123456";
+    admin.role = Role.ADMIN;
+
+    UserRegistration user = new UserRegistration();
+    user.username = "user";
+    user.password = "password";
+    user.role = Role.USER;
+
+    return new Object[][]{
+        {admin, HttpStatus.CREATED},
+        {user, HttpStatus.UNAUTHORIZED}
+    };
+  }
+
+  @Test(dataProvider = "create-user-provider")
   public void testCreateUser(UserRegistration user, HttpStatus status)
   {
     JSONObject userParams = new JSONObject();
