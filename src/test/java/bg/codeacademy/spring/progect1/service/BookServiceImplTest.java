@@ -4,6 +4,7 @@ import bg.codeacademy.spring.project1.model.Book;
 import bg.codeacademy.spring.project1.repository.BookRepository;
 import bg.codeacademy.spring.project1.service.BookService;
 import bg.codeacademy.spring.project1.service.BookServiceImpl;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -96,6 +97,22 @@ public class BookServiceImplTest {
 
       Mockito.verify(bookRepositoryMock, times(1)).
               findByTitleContainingOrAuthorContaining(title, author);
+  }
+
+  @Test(dataProvider = "book-data")
+    public void it_should_edit_book(Book book)
+  {
+      Book newBook = new Book();
+      newBook.setTitle("tite");
+      newBook.setAuthor("autr");
+      newBook.setYear(2015);
+      newBook.setId(100);
+
+
+    //  Book someBook = bookService.editBook(bookRepositoryMock.findById(book.getId()).get().getId(), newBook);
+
+      Mockito.verify(bookRepositoryMock, times(1)).getOne(book.getId());
+
   }
 
 }

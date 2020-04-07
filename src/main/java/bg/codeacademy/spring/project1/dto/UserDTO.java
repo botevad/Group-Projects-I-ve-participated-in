@@ -1,8 +1,10 @@
 package bg.codeacademy.spring.project1.dto;
 
+import bg.codeacademy.spring.project1.model.IdEntity;
+
 import javax.validation.constraints.NotBlank;
 
-public class UserDTO
+public class UserDTO extends IdEntity
 {
   @NotBlank(message = "Username cannot be blank or null")
   public String username;

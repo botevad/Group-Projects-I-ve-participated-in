@@ -11,8 +11,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/ratings")
@@ -31,18 +34,19 @@ public class RatingController
   }
 
   @PostMapping()
-  public ResponseEntity<Void> addRating(@RequestParam Integer bookId, @RequestBody Rating rating, @RequestParam Integer userId)
+  public ResponseEntity<Void> addRating(@RequestParam Integer bookId, @RequestBody @Valid Rating rating, Principal principal)
   {
     Book testBook;
-    if (!bookService.getBook(bookId).isPresent() && userService.getUser(userId).isPresent()) {
+    if (!bookService.getBook(bookId).isPresent() && userService.getUser(principal.getName()) == null) {
       return ResponseEntity.notFound().build();
     }
     else {
       testBook = bookService.getBook(bookId).get();
-      User u = userService.getUser(userId).get();
-      if (ratingService.findByBookIdAndUserId(bookId, userId).isPresent()) {
-        ratingService.findByBookIdAndUserId(bookId, userId).get().setRating(rating.getRating());
-        ratingService.addRating(ratingService.findByBookIdAndUserId(bookId, userId).get());
+      User u = userService.getUser(principal.getName());
+      Optional<Rating> r = ratingService.findByBookIdAndUserId(bookId, u.getId());
+      if (r.isPresent()) {
+        r.get().setRating(rating.getRating());
+        ratingService.addRating(ratingService.findByBookIdAndUserId(bookId, u.getId()).get());
         return ResponseEntity.ok().build();
       }
       else {
