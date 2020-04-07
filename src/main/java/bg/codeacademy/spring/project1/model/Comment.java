@@ -1,6 +1,9 @@
 package bg.codeacademy.spring.project1.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -8,6 +11,8 @@ import java.time.LocalDateTime;
 @Table(name = "comments")
 public class Comment extends IdEntity
 {
+  @Null(message = "Provide content!")
+  @Size(min = 2, max = 256, message = "Comment between 2 and 256 characters!")
   private String content;
 
   @ManyToOne(targetEntity = User.class)
