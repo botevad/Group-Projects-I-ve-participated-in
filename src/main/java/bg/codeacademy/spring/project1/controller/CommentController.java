@@ -7,6 +7,7 @@ import bg.codeacademy.spring.project1.model.User;
 import bg.codeacademy.spring.project1.service.BookService;
 import bg.codeacademy.spring.project1.service.CommentService;
 import bg.codeacademy.spring.project1.service.UserService;
+import com.sun.istack.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -49,7 +50,7 @@ public class CommentController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<CommentDTO>> getAllBookComment(@PathVariable Integer bookId) {
+    public ResponseEntity<List<CommentDTO>> getAllBookComment(@PathVariable @NotNull Integer bookId) {
         if (!bookService.getBook(bookId).isPresent()) {
             return ResponseEntity.notFound().build();
         } else {
@@ -71,7 +72,7 @@ public class CommentController {
 
 
     @DeleteMapping("/{commentId}")
-    public ResponseEntity<Void> removeComment(@PathVariable Integer bookId, @PathVariable Integer commentId) {
+    public ResponseEntity<Void> removeComment(@PathVariable @NotNull Integer bookId, @PathVariable @NotNull  Integer commentId) {
         if (!bookService.getBook(bookId).isPresent())
         {
             return ResponseEntity.notFound().build();

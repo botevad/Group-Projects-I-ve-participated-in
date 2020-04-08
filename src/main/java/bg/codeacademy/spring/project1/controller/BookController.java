@@ -9,6 +9,7 @@ import bg.codeacademy.spring.project1.service.BookService;
 import bg.codeacademy.spring.project1.service.CommentService;
 import bg.codeacademy.spring.project1.service.RatingService;
 import bg.codeacademy.spring.project1.service.UserService;
+import com.sun.istack.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -40,7 +41,7 @@ public class BookController {
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<BookDTOWithComments> getBook(@PathVariable Integer id) {
+    public ResponseEntity<BookDTOWithComments> getBook(@PathVariable @NotNull Integer id) {
         Optional<Book> b = bookService.getBook(id);
         if (!b.isPresent()) {
             return ResponseEntity.notFound().build();
