@@ -2,6 +2,7 @@ package bg.codeacademy.spring.project1.config;
 
 import bg.codeacademy.spring.project1.enums.Role;
 import bg.codeacademy.spring.project1.repository.UserRepository;
+import bg.codeacademy.spring.project1.service.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -20,11 +21,11 @@ import java.util.List;
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 {
-  private UserRepository userRepo;
+  private UserService userService;
 
-  public SecurityConfiguration(UserRepository userRepo)
+  public SecurityConfiguration(UserService userService)
   {
-    this.userRepo = userRepo;
+    this.userService = userService;
   }
 
   @Override
@@ -62,6 +63,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
   @Override
   public UserDetailsService userDetailsService()
   {
-    return new UserDetailsServiceImpl(userRepo);
+    return new UserDetailsServiceImpl(userService);
   }
 }
