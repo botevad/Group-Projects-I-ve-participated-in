@@ -27,6 +27,7 @@ public class Rating extends IdEntity {
     public Rating() {
     }
 
+
     public Rating(Integer rating, Book book, User user) {
         this.rating = rating;
         this.book = book;

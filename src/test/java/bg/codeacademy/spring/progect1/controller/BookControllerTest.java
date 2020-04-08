@@ -1,11 +1,11 @@
 package bg.codeacademy.spring.progect1.controller;
 
-
 import bg.codeacademy.spring.project1.Project1Application;
 import bg.codeacademy.spring.project1.model.Book;
 import bg.codeacademy.spring.project1.repository.BookRepository;
 import io.restassured.RestAssured;
 import io.restassured.authentication.BasicAuthScheme;
+import io.restassured.http.ContentType;
 import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,6 +14,9 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = Project1Application.class)
 @ActiveProfiles("dev")
@@ -54,17 +57,19 @@ public class BookControllerTest extends AbstractTestNGSpringContextTests {
 
         RestAssured.given().contentType("application/json")
                 .body(bookParams.toJSONString()).when().post("/api/v1/books").
-                then().assertThat().statusCode(200);
+                then().assertThat().assertThat().statusCode(200).and().
+                contentType(ContentType.JSON);
     }
 
     @Test
     public void get_all_books_request_verify_200() {
-        RestAssured.given().when().get("/api/v1/books").then().statusCode(200);
+        RestAssured.given().when().get("/api/v1/books").then().assertThat().statusCode(200).and().
+                contentType(ContentType.JSON);
     }
 
     @Test
     public void get_book_request_non_valid() {
-        RestAssured.given().when().get("/api/v1/books/99").then().statusCode(404);
+        RestAssured.given().when().get("/api/v1/books/99").then().assertThat().statusCode(404);
     }
 
     @Test
@@ -75,62 +80,34 @@ public class BookControllerTest extends AbstractTestNGSpringContextTests {
 
         RestAssured.given().contentType("application/json")
                 .body(bookParams.toJSONString()).when().post("/api/v1/books").
-                then().statusCode(500);
+                then().assertThat().statusCode(500);
 
     }
 
-    @Test
-    public void get_book_request_verify_200() {
-        Book book = createBookForUsage();
-
-        bookRepository.save(book);
-
-        RestAssured.given().when().get("/api/v1/books/1").then().statusCode(200);
-    }
 
     @Test
-    public void add_book_that_exist_get_error() {
-        Book book = createBookForUsage();
-
-        bookRepository.save(book);
+    public void add_book_that_exist_verify_error() {
+        Book book1 = createBookForUsage();
+        bookRepository.save(book1);
+        book1.setId(2);
 
         JSONObject bookParams = new JSONObject();
-        bookParams.put("author", book.getAuthor());
-        bookParams.put("title", book.getTitle());
-        bookParams.put("year", book.getYear());
+        bookParams.put("author", book1.getAuthor());
+        bookParams.put("title", book1.getTitle());
+        bookParams.put("year", book1.getYear());
 
         RestAssured.given().contentType("application/json")
                 .body(bookParams.toJSONString()).when().post("/api/v1/books").
-                then().statusCode(500);
-    }
+                then().assertThat().statusCode(500);
 
-    @Test
-    public void delete_book_request_verify_200() {
-        Book book = createBookForUsage();
-
-        bookRepository.save(book);
-
-        RestAssured.given().when().delete("/api/v1/books/1").then().statusCode(200);
+        bookRepository.delete(book1);
     }
 
     @Test
     public void delete_book_request_non_valid() {
-        RestAssured.given().when().delete("/api/v1/books/15").then().statusCode(404);
+        RestAssured.given().when().delete("/api/v1/books/15").then().assertThat().statusCode(404);
     }
 
-    @Test
-    public void edit_book_request_verify_200() {
-        Book book = createBookForUsage();
-        bookRepository.save(book);
-
-        JSONObject bookParams = new JSONObject();
-        bookParams.put("author", "Stephen King");
-        bookParams.put("title", "IT");
-        bookParams.put("year", 1986);
-
-        RestAssured.given().contentType("application/json").body(bookParams.toJSONString()).put("/api/v1/books/1")
-                .then().statusCode(200);
-    }
 
     @Test
     public void edit_book_request_non_valid() {
@@ -140,8 +117,25 @@ public class BookControllerTest extends AbstractTestNGSpringContextTests {
         bookParams.put("year", 1986);
 
         RestAssured.given().contentType("application/json").body(bookParams.toJSONString()).put("/api/v1/books/10")
-                .then().statusCode(404);
+                .then().assertThat().statusCode(404);
     }
 
+
+    @Test
+    public void add_book_response_verify() {
+        JSONObject bookParams = new JSONObject();
+        bookParams.put("author", "Rado");
+        bookParams.put("title", "Java");
+        bookParams.put("year", 2020);
+
+        RestAssured.given().contentType("application/json").body(bookParams.toJSONString())
+                .when().post("/api/v1/books").
+                then().assertThat().
+                contentType(ContentType.JSON).
+                body("author", equalTo("Rado"))
+                .body("title", equalTo("Java"))
+                .body("year", equalTo(2020));
+
+    }
 
 }
