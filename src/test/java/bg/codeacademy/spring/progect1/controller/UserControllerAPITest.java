@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = Project1Application.class)
 @ActiveProfiles("dev")
 
-public class UserControllerTest extends AbstractTestNGSpringContextTests
+public class UserControllerAPITest extends AbstractTestNGSpringContextTests
 {
   @LocalServerPort
   int port;

@@ -2,10 +2,10 @@ package bg.codeacademy.spring.project1.service;
 
 import bg.codeacademy.spring.project1.model.Book;
 import bg.codeacademy.spring.project1.repository.BookRepository;
-import org.hibernate.mapping.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,7 +21,7 @@ public class BookServiceImpl implements BookService
   }
 
   @Override
-  public Optional<Book> getBook(Integer id)
+  public Optional<Book> getBook(@NotNull Integer id)
   {
     return bookRepository.findById(id);
   }
