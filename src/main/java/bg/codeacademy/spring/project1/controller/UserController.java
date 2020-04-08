@@ -16,6 +16,7 @@ import java.net.URISyntaxException;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Validated
 @RestController
@@ -46,8 +47,8 @@ public class UserController
   @GetMapping(value = "/{user}")
   public ResponseEntity<UserDTO> getUser(@PathVariable("user") String userName)
   {
-    User user = userService.getUser(userName);
-    if (user != null) {
+    Optional<User> user = userService.getUser(userName);
+    if (user.isPresent()) {
       UserDTO userDto = new UserDTO();
       userDto.username = userName;
       return ResponseEntity.ok(userDto);
@@ -58,7 +59,7 @@ public class UserController
   @PutMapping
   public ResponseEntity<?> createUser(@Valid @RequestBody() UserRegistration userRegistration) throws URISyntaxException
   {
-    if (userService.getUser(userRegistration.username) != null) {
+    if (userService.getUser(userRegistration.username).isPresent()) {
       return ResponseEntity.status(HttpStatus.CONFLICT).build();
     }
     userService.createUser(userRegistration.username, userRegistration.password, userRegistration.role);

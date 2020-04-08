@@ -56,11 +56,12 @@ public class BookController {
                         .setTime(comment.getDate());
                 comments.add(commentDTO);
             }
-            bookForClient.setId(b.get().getId())
-                    .setYear(b.get().getYear())
-                    .setAuthor(b.get().getAuthor())
-                    .setTitle(b.get().getTitle());
-            bookForClient.setRating(ratingService.getRating(b.get()));
+            Book book1 = b.get();
+            bookForClient.setId(book1.getId())
+                    .setYear(book1.getYear())
+                    .setAuthor(book1.getAuthor())
+                    .setTitle(book1.getTitle());
+            bookForClient.setRating(ratingService.getRating(book1));
             bookForClient.setCommentList(comments);
             bookForClient.setCountComments(comments.size());
 
@@ -94,45 +95,42 @@ public class BookController {
 
         List<BookDTO> books = new ArrayList<>();
 
-        if (!bookService.findAllBooks().isPresent()) {
+        if ("*".equals(author) && "*".equals(title)) {
+            author = title = "";
+        }
+        Optional<List<Book>> originBooks = bookService.findBookByCriteria(title, author);
+        if (!originBooks.isPresent()) {
             return ResponseEntity.ok(books);
         }
-      List<Book> originBooks;
-        if (title.equals("*") && author.equals("*")) {
-            originBooks = bookService.findAllBooks().get();
-
-        } else {
-          originBooks = bookService.findBookByCriteria(title, author).get();
-        }
-
-            for (int i = 0; i < originBooks.size(); i++) {
+        else {
+            for (int i = 0; i < originBooks.get().size(); i++) {
                 BookDTO bookDto = new BookDTO()
-                        .setId(originBooks.get(i).getId())
-                        .setAuthor(originBooks.get(i).getAuthor())
-                        .setTitle(originBooks.get(i).getTitle())
-                        .setYear(originBooks.get(i).getYear())
-                        .setRating(ratingService.getRating(originBooks.get(i)))
-                        .setCountComments(commentService.getAllComments(originBooks.get(i).getId()).size());
+                        .setId(originBooks.get().get(i).getId())
+                        .setAuthor(originBooks.get().get(i).getAuthor())
+                        .setTitle(originBooks.get().get(i).getTitle())
+                        .setYear(originBooks.get().get(i).getYear())
+                        .setRating(ratingService.getRating(originBooks.get().get(i)))
+                        .setCountComments(commentService.getAllComments(originBooks.get().get(i).getId()).size());
 
                 books.add(bookDto);
             }
             return ResponseEntity.ok(books);
         }
-
-
+    }
 
 
     @PutMapping("/{id}")
     public ResponseEntity<Book> editBook(@PathVariable Integer id, @RequestBody Book book) {
-        if (!bookService.getBook(id).isPresent()) {
+        Optional<Book> b = bookService.getBook(id);
+        if (!b.isPresent()) {
             return ResponseEntity.notFound().build();
         } else {
-            Book b = bookService.getBook(id).get();
-            b.setAuthor(book.getAuthor());
-            b.setTitle(book.getTitle());
-            b.setYear(book.getYear());
-            bookService.addBook(b);
-            return ResponseEntity.ok(b);
+            Book b1 = b.get();
+            b1.setAuthor(book.getAuthor());
+            b1.setTitle(book.getTitle());
+            b1.setYear(book.getYear());
+            bookService.addBook(b1);
+            return ResponseEntity.ok(b1);
         }
 
     }

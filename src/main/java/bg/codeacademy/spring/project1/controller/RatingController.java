@@ -19,47 +19,44 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/ratings")
-public class RatingController
-{
-  private final RatingService ratingService;
-  private final BookService   bookService;
-  private final UserService   userService;
+public class RatingController {
+    private final RatingService ratingService;
+    private final BookService bookService;
+    private final UserService userService;
 
-  @Autowired
-  public RatingController(RatingService ratingService, BookService bookService, UserService userService)
-  {
-    this.ratingService = ratingService;
-    this.bookService = bookService;
-    this.userService = userService;
-  }
-
-  @PostMapping()
-  public ResponseEntity<Void> addRating(@RequestParam Integer bookId, @RequestBody @Valid Rating rating, Principal principal)
-  {
-    Book testBook;
-    if (!bookService.getBook(bookId).isPresent() && userService.getUser(principal.getName()) == null) {
-      return ResponseEntity.notFound().build();
+    @Autowired
+    public RatingController(RatingService ratingService, BookService bookService, UserService userService) {
+        this.ratingService = ratingService;
+        this.bookService = bookService;
+        this.userService = userService;
     }
-    else {
-      testBook = bookService.getBook(bookId).get();
-      User u = userService.getUser(principal.getName());
-      Optional<Rating> r = ratingService.findByBookIdAndUserId(bookId, u.getId());
-      if (r.isPresent()) {
-        r.get().setRating(rating.getRating());
-        ratingService.addRating(ratingService.findByBookIdAndUserId(bookId, u.getId()).get());
-        return ResponseEntity.ok().build();
-      }
-      else {
-        rating.setBook(testBook);
-        rating.setUser(u);
-        rating.setRating(rating.getRating());
 
-        ratingService.addRating(rating);
-      }
+    @PostMapping()
+    public ResponseEntity<Void> addRating(@RequestParam Integer bookId, @RequestBody @Valid Rating rating, Principal principal) {
 
-      return ResponseEntity.ok().build();
+        Optional<Book> testBook = bookService.getBook(bookId);
+        Optional<User> user = userService.getUser(principal.getName());
+
+        if (!testBook.isPresent() || !user.isPresent()) {
+            return ResponseEntity.notFound().build();
+        } else {
+
+            Optional<Rating> r = ratingService.findByBookIdAndUserId(bookId, user.get().getId());
+            if (r.isPresent()) {
+                r.get().setRating(rating.getRating());
+                ratingService.addRating(r.get());
+                return ResponseEntity.ok().build();
+            } else {
+                rating.setBook(testBook.get());
+                rating.setUser(user.get());
+                rating.setRating(rating.getRating());
+
+                ratingService.addRating(rating);
+            }
+
+            return ResponseEntity.ok().build();
+        }
     }
-  }
 }
 
 

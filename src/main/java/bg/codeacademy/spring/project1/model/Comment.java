@@ -1,6 +1,9 @@
 package bg.codeacademy.spring.project1.model;
-import bg.codeacademy.spring.project1.dto.UserDTO;
-import javax.persistence.*;
+
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
@@ -17,37 +20,41 @@ public class Comment extends IdEntity
   @ManyToOne(targetEntity = Book.class)
   @JoinColumn(name = "book_id", referencedColumnName = "id")
   private Book          book;
-  private LocalDateTime date;
-  public Comment()
-  {
-    this.date = LocalDateTime.now();
-  }
-  public LocalDateTime getDate()
-  {
-    return date;
-  }
-  public String getContent()
-  {
+  private LocalDateTime date = LocalDateTime.now();
+
+  public String getContent() {
     return content;
   }
-  public void setContent(String content)
-  {
+
+  public Comment setContent(String content) {
     this.content = content;
+    return this;
   }
-  public Book getBook()
-  {
-    return book;
-  }
-  public void setBook(Book book)
-  {
-    this.book = book;
-  }
-  public User getUser()
-  {
+
+  public User getUser() {
     return user;
   }
-  public void setUser(User user)
-  {
+
+  public Comment setUser(User user) {
     this.user = user;
+    return this;
+  }
+
+  public Book getBook() {
+    return book;
+  }
+
+  public Comment setBook(Book book) {
+    this.book = book;
+    return this;
+  }
+
+  public LocalDateTime getDate() {
+    return date;
+  }
+
+  public Comment setDate(LocalDateTime date) {
+    this.date = date;
+    return this;
   }
 }

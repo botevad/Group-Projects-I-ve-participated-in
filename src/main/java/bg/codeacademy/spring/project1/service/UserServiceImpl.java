@@ -29,10 +29,10 @@ public class UserServiceImpl implements UserService
     this.userRepo = userRepo;
   }
 
-  public User getUser(String userName)
+  public Optional<User> getUser(String userName)
   {
-    User user = userRepo.findUserByUsername(userName);
-    if (user != null && user.isEnabled()) {
+    Optional<User> user = userRepo.findUserByUsername(userName);
+    if (user.isPresent() && user.get().isEnabled()) {
       return user;
     }
     return null;
@@ -51,11 +51,11 @@ public class UserServiceImpl implements UserService
   @Override
   public boolean changePassword(String userName, String oldPassword, String newPassword)
   {
-    User user = getUser(userName);
-    if (user != null && user.isEnabled()) {
-      if (new BCryptPasswordEncoder().matches(oldPassword, user.getPassword())) {
-        user.setPassword(passwordEncoder.encode(newPassword));
-        userRepo.saveAndFlush(user);
+    Optional<User> user = getUser(userName);
+    if (user.isPresent() && user.get().isEnabled()) {
+      if (new BCryptPasswordEncoder().matches(oldPassword, user.get().getPassword())) {
+        user.get().setPassword(passwordEncoder.encode(newPassword));
+        userRepo.saveAndFlush(user.get());
         return true;
       }
     }
@@ -65,10 +65,10 @@ public class UserServiceImpl implements UserService
   @Override
   public boolean deleteUser(String userName)
   {
-    User user = getUser(userName);
-    if (user != null) {
-      user.setEnabled(false);
-      userRepo.saveAndFlush(user);
+    Optional<User> user = getUser(userName);
+    if (user.isPresent()) {
+      user.get().setEnabled(false);
+      userRepo.saveAndFlush(user.get());
       return true;
     }
     return false;

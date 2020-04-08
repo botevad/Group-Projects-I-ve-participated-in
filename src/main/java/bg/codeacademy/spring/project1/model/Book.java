@@ -22,9 +22,11 @@ public class Book extends IdEntity
   @NotNull(message = "Provide year!")
   @Positive(message = "Provide positive year!")
   private Integer year;
-  public Book()
-  {
+
+
+  public Book() {
   }
+
   public String getTitle()
   {
     return title;
