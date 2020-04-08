@@ -1,6 +1,6 @@
 package bg.codeacademy.spring.project1.controller;
 
-import bg.codeacademy.spring.project1.dto.UserDTO;
+import bg.codeacademy.spring.project1.dto.CommentDTO;
 import bg.codeacademy.spring.project1.model.Book;
 import bg.codeacademy.spring.project1.model.Comment;
 import bg.codeacademy.spring.project1.model.User;
@@ -11,13 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
 import java.security.Principal;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
-@RequestMapping("/api/v1/books/{id}/comments")
+@RequestMapping("/api/v1/books/{bookId}/comments")
 public class CommentController {
     private final CommentService commentService;
     private final BookService bookService;
@@ -40,7 +38,7 @@ public class CommentController {
         if ((!b.isPresent())) {
             return ResponseEntity.notFound().build();
         } else {
-            User u = userService.getUser(principal.getName());
+            User u = userService.getUser(principal.getName()).get();
 
             comment.setUser(u);
 
@@ -51,22 +49,40 @@ public class CommentController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<Comment>> getAllBookComment(@PathVariable Integer id) {
-        if (!bookService.getBook(id).isPresent()) {
+    public ResponseEntity<List<CommentDTO>> getAllBookComment(@PathVariable Integer bookId) {
+        if (!bookService.getBook(bookId).isPresent()) {
             return ResponseEntity.notFound().build();
         } else {
-            return ResponseEntity.ok(commentService.getAllComments(id));
+            Comparator<CommentDTO> comparatorByTime = (a, b) -> b.getTime().compareTo(a.getTime());
+            List<CommentDTO> sortedComments = new ArrayList<>();
+            List<Comment> commentsFromDb = commentService.getAllComments(bookId);
+            for ( Comment c: commentsFromDb
+                 ) {
+                CommentDTO commentDTO = new CommentDTO();
+                commentDTO.setUserName(c.getUser().getUsername())
+                        .setContent(c.getContent())
+                        .setTime(c.getDate());
+                sortedComments.add(commentDTO);
+            }
+            Collections.sort(sortedComments, comparatorByTime);
+            return ResponseEntity.ok(sortedComments);
         }
     }
 
 
-    @DeleteMapping()
-    public ResponseEntity<Void> removeComment(@PathVariable Integer id) {
-        if (!commentService.getComment(id).isPresent()) {
+    @DeleteMapping("/{commentId}")
+    public ResponseEntity<Void> removeComment(@PathVariable Integer bookId, @PathVariable Integer commentId) {
+        if (!bookService.getBook(bookId).isPresent())
+        {
             return ResponseEntity.notFound().build();
-        } else {
-            commentService.deleteComment(id);
-            return ResponseEntity.ok().build();
+        }
+            else {
+            if (!commentService.getComment(commentId).isPresent()) {
+                return ResponseEntity.notFound().build();
+            } else {
+                commentService.deleteComment(commentId);
+                return ResponseEntity.ok().build();
+            }
         }
 
     }

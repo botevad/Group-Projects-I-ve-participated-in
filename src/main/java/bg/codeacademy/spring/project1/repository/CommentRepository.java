@@ -2,6 +2,7 @@ package bg.codeacademy.spring.project1.repository;
 
 import bg.codeacademy.spring.project1.model.Book;
 import bg.codeacademy.spring.project1.model.Comment;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 

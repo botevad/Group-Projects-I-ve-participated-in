@@ -2,6 +2,7 @@ package bg.codeacademy.spring.project1.service;
 
 import bg.codeacademy.spring.project1.model.Book;
 import bg.codeacademy.spring.project1.model.Comment;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

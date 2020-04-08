@@ -1,11 +1,13 @@
 package bg.codeacademy.spring.project1.service;
 
+import bg.codeacademy.spring.project1.dto.CommentDTO;
 import bg.codeacademy.spring.project1.model.Book;
 import bg.codeacademy.spring.project1.model.Comment;
 import bg.codeacademy.spring.project1.repository.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,6 +46,7 @@ public class CommentServiceImpl implements CommentService
   @Override
   public List<Comment> getAllComments(Integer bookId)
   {
+
     return commentRepository.findAllByBookId(bookId);
   }
 }

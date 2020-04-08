@@ -13,7 +13,7 @@ import java.util.Optional;
 public interface UserService
 {
 
-  User getUser(String userName);
+  Optional<User> getUser(String userName);
 
   void createUser(String userName, String password, Role role);
 
