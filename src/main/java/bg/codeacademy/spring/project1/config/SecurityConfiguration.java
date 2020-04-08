@@ -21,12 +21,6 @@ import java.util.List;
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 {
-  private UserService userService;
-
-  public SecurityConfiguration(UserService userService)
-  {
-    this.userService = userService;
-  }
 
   @Override
   protected void configure(HttpSecurity http) throws Exception
@@ -59,10 +53,4 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
     return new BCryptPasswordEncoder();
   }
 
-  @Bean
-  @Override
-  public UserDetailsService userDetailsService()
-  {
-    return new UserDetailsServiceImpl(userService);
-  }
 }
