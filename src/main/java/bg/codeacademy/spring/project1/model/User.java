@@ -26,6 +26,13 @@ public class User extends IdEntity
   {
   }
 
+  public User(@NotBlank String username, String password, Role role, boolean isEnabled) {
+    this.username = username;
+    this.password = password;
+    this.role = role;
+    this.isEnabled = isEnabled;
+  }
+
   //user created by Admin can have a directly approved state
   public User(boolean isEnabled)
   {
