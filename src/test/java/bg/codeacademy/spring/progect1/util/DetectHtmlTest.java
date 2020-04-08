@@ -12,7 +12,8 @@ public class DetectHtmlTest
   {
     return new Object[][]{
         {"Hello world", false},
-        {"Contains single tag <tag/>", true}
+        {"Contains single tag <tag/>", true},
+        {"<body id=\"wpdiscuz_5.3.5\">This is a body</body>", true}
     };
   }
 
@@ -21,8 +22,6 @@ public class DetectHtmlTest
   {
     boolean result = DetectHtml.isHtml(text);
     Assert.assertEquals(result, expectedResult);
-//    result = DetectHtml.isHtml("Hello <div style=\"background:red\">");
-//    Assert.assertTrue(result);
 
     /**
      * <openTag></openTag>
