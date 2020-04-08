@@ -7,22 +7,22 @@ package bg.codeacademy.spring.project1.util;
  * @author dbennett455@gmail.com - David H. Bennett
  */
 
-import java.io.IOException;
 import java.util.regex.Pattern;
 
 public class DetectHtml
 {
   // adapted from post by Phil Haack and modified to match better
-  public final static String  tagStart       =
+  public final static String  TAG_START      =
       "\\<\\w+((\\s+\\w+(\\s*\\=\\s*(?:\".*?\"|'.*?'|[^'\"\\>\\s]+))?)+\\s*|\\s*)\\>";
-  public final static String  tagEnd         =
+  public final static String  TAG_END          =
       "\\</\\w+\\>";
-  public final static String  tagSelfClosing =
+  public final static String  TAG_SELF_CLOSING =
       "\\<\\w+((\\s+\\w+(\\s*\\=\\s*(?:\".*?\"|'.*?'|[^'\"\\>\\s]+))?)+\\s*|\\s*)/\\>";
-  public final static String  htmlEntity     =
+  public final static String  HTML_ENTITY      =
       "&[a-zA-Z][a-zA-Z0-9]+;";
-  public final static Pattern htmlPattern    = Pattern.compile(
-      "(" + tagStart + ".*" + tagEnd + ")|(" + tagSelfClosing + ")|(" + htmlEntity + ")",
+  public final static Pattern HTML_PATTERN     = Pattern.compile(
+      "(" + TAG_START + ".*" + TAG_END + ")|(" + TAG_SELF_CLOSING + ")|(" + HTML_ENTITY + ")"
+      ,
       Pattern.DOTALL
   );
 
@@ -36,7 +36,7 @@ public class DetectHtml
   {
     boolean ret = false;
     if (s != null) {
-      ret = htmlPattern.matcher(s).find();
+      ret = HTML_PATTERN.matcher(s).find();
     }
     return ret;
   }

@@ -5,6 +5,7 @@ import bg.codeacademy.spring.project1.dto.UserDTO;
 import bg.codeacademy.spring.project1.dto.UserRegistration;
 import bg.codeacademy.spring.project1.model.User;
 import bg.codeacademy.spring.project1.service.UserService;
+import org.hibernate.annotations.Parameter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
