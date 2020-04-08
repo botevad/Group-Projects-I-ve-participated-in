@@ -3,6 +3,7 @@ package bg.codeacademy.spring.project1.config;
 import bg.codeacademy.spring.project1.enums.Role;
 import bg.codeacademy.spring.project1.model.User;
 import bg.codeacademy.spring.project1.repository.UserRepository;
+import bg.codeacademy.spring.project1.service.UserService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -13,24 +14,24 @@ import java.util.List;
 public class UserDetailsServiceImpl implements UserDetailsService
 {
 
-  private UserRepository userRepo;
+  private UserService userService;
 
-  public UserDetailsServiceImpl(UserRepository userRepo)
+  public UserDetailsServiceImpl(UserService userService)
   {
-    this.userRepo = userRepo;
+    this.userService = userService;
   }
 
   @Override
   public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException
   {
-    List<User> users = userRepo.findAll();
+    List<User> users = userService.getUsers();
     if (users.isEmpty()) {
       // first start, create default admin user
       User admin = new User(true);
       admin.setUsername("admin");
       admin.setRole(Role.ADMIN);
       admin.setPassword(new BCryptPasswordEncoder().encode("123456"));
-      userRepo.saveAndFlush(admin);
+      userService.createUser(admin.getUsername(),admin.getPassword(),admin.getRole());
       users.add(admin);
     }
     for (bg.codeacademy.spring.project1.model.User user : users) {
