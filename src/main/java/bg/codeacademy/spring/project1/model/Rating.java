@@ -11,6 +11,7 @@ import java.util.Objects;
 public class Rating extends IdEntity
 {
 
+
   @Column(columnDefinition = "integer default 0")
   @NotNull
   @Range(min = 1, max = 10)

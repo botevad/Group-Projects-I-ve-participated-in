@@ -32,15 +32,8 @@ public class UserControllerAPITest extends AbstractTestNGSpringContextTests
   @DataProvider(name = "user-provider")
   public Object[][] dataProviderMethod()
   {
-    UserRegistration admin = new UserRegistration();
-    admin.username = "admin";
-    admin.password = "123456";
-    admin.role = Role.ADMIN;
-
-    UserRegistration user = new UserRegistration();
-    user.username = "user";
-    user.password = "password";
-    user.role = Role.USER;
+    UserRegistration admin = new UserRegistration("admin", "123456", Role.ADMIN);
+    UserRegistration user = new UserRegistration("user", "password", Role.USER);
 
     return new Object[][]{
         {admin, HttpStatus.OK},
@@ -51,15 +44,8 @@ public class UserControllerAPITest extends AbstractTestNGSpringContextTests
   @DataProvider(name = "create-user-provider")
   public Object[][] dataCreateProviderMethod()
   {
-    UserRegistration admin = new UserRegistration();
-    admin.username = "admin";
-    admin.password = "123456";
-    admin.role = Role.ADMIN;
-
-    UserRegistration user = new UserRegistration();
-    user.username = "user";
-    user.password = "password";
-    user.role = Role.USER;
+    UserRegistration admin = new UserRegistration("admin", "123456", Role.ADMIN);
+    UserRegistration user = new UserRegistration("user", "password", Role.USER);
 
     return new Object[][]{
         {admin, HttpStatus.CREATED},
@@ -78,7 +64,7 @@ public class UserControllerAPITest extends AbstractTestNGSpringContextTests
     RestAssured
         .given()
         .auth()
-        .basic(user.username, user.password)
+        .basic(user.getUsername(), user.getPassword())
         .contentType("application/json")
         .body(userParams.toJSONString())
         .when()
@@ -94,7 +80,7 @@ public class UserControllerAPITest extends AbstractTestNGSpringContextTests
     RestAssured
         .given()
         .auth()
-        .basic(user.username, user.password)
+        .basic(user.getUsername(), user.getPassword())
         .when()
         .get("/api/v1/users")
         .then()
@@ -114,7 +100,7 @@ public class UserControllerAPITest extends AbstractTestNGSpringContextTests
     RestAssured
         .given()
         .auth()
-        .basic(user.username, user.password)
+        .basic(user.getUsername(), user.getPassword())
         .contentType("application/json")
         .body(userParams.toJSONString())
         .when()
@@ -122,8 +108,8 @@ public class UserControllerAPITest extends AbstractTestNGSpringContextTests
     //delete the created user
     RestAssured.given()
         .auth()
-        .basic(user.username, user.password)
-        .pathParam("user", user.username)
+        .basic(user.getUsername(), user.getPassword())
+        .pathParam("user", user.getUsername())
         .when()
         .delete("/api/v1/users/{user}")
         .then()

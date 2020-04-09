@@ -10,8 +10,41 @@ public class UserRegistration extends UserDTO
 {
   @NotBlank
   @Size(min = 3, max = 50)
-  public String password;
+  private String password;
   @NotNull
-  public Role   role;
+  private Role   role;
 
+  public UserRegistration()
+  {
+    // default constructor
+  }
+
+  public UserRegistration(String username, String password, Role role)
+  {
+    this.username = username;
+    this.password = password;
+    this.role = role;
+  }
+
+  public String getPassword()
+  {
+    return password;
+  }
+
+  public UserRegistration setPassword(String password)
+  {
+    this.password = password;
+    return this;
+  }
+
+  public Role getRole()
+  {
+    return role;
+  }
+
+  public UserRegistration setRole(Role role)
+  {
+    this.role = role;
+    return this;
+  }
 }

@@ -41,7 +41,7 @@ public class BookServiceImpl implements BookService
   @Override
   public Book editBook(Integer id, Book book)
   {
-    Book b = getBook(id).get();
+    Book b = bookRepository.getOne(id);
     b.setAuthor(book.getAuthor());
     b.setTitle(book.getTitle());
     b.setYear(book.getYear());
@@ -58,6 +58,6 @@ public class BookServiceImpl implements BookService
   @Override
   public Optional<List<Book>> findBookByCriteria(String title, String author)
   {
-    return  bookRepository.findByTitleContainingOrAuthorContaining(title, author);
+    return bookRepository.findByTitleContainingOrAuthorContaining(title, author);
   }
 }

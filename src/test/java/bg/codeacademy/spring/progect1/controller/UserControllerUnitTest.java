@@ -4,7 +4,10 @@ import bg.codeacademy.spring.project1.controller.UserController;
 import bg.codeacademy.spring.project1.dto.UserRegistration;
 import bg.codeacademy.spring.project1.model.User;
 import bg.codeacademy.spring.project1.service.UserService;
-import org.mockito.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.testng.Assert;
@@ -12,21 +15,22 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.net.URISyntaxException;
+import java.util.Optional;
 
 public class UserControllerUnitTest
 {
   @InjectMocks
-  UserController    userController;
+  UserController userController;
   @Mock
-  UserRegistration  userRegistration;
-  @Mock
-  UserService       userService;
+  UserService    userService;
+
+  UserRegistration userRegistration = new UserRegistration();
 
   @BeforeClass
   public void setup()
   {
     MockitoAnnotations.initMocks(this);
-    userRegistration.username = "Kuncho";
+    userRegistration.setUsername("Kuncho");
   }
 
 
@@ -35,7 +39,7 @@ public class UserControllerUnitTest
   {
     Mockito
         .when(userService.getUser(Mockito.anyString()))
-        .thenReturn(new User());
+        .thenReturn(Optional.of(new User()));
 
     ResponseEntity<?> responseEntity = userController.createUser(userRegistration);
     Assert.assertEquals(responseEntity.getStatusCode(), HttpStatus.CONFLICT);
@@ -46,7 +50,7 @@ public class UserControllerUnitTest
   {
     Mockito
         .when(userService.getUser(Mockito.anyString()))
-        .thenReturn(null);
+        .thenReturn(Optional.empty());
 
     ResponseEntity<?> responseEntity = userController.createUser(userRegistration);
     Assert.assertEquals(responseEntity.getStatusCode(), HttpStatus.CREATED);
@@ -71,8 +75,8 @@ public class UserControllerUnitTest
         .when(userService.deleteUser(Mockito.anyString()))
         .thenReturn(true);
 
-    ResponseEntity<?> responseEntity = userController.deleteUser(userRegistration.username);
+    ResponseEntity<?> responseEntity = userController.deleteUser(userRegistration.getUsername());
     Assert.assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
   }
 
- }
+}

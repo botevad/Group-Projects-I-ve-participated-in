@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 public class DetectHtml
 {
   // adapted from post by Phil Haack and modified to match better
-  public final static String  TAG_START      =
+  public final static String  TAG_START        =
       "\\<\\w+((\\s+\\w+(\\s*\\=\\s*(?:\".*?\"|'.*?'|[^'\"\\>\\s]+))?)+\\s*|\\s*)\\>";
   public final static String  TAG_END          =
       "\\</\\w+\\>";

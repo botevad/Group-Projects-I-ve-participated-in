@@ -1,6 +1,5 @@
 package bg.codeacademy.spring.project1.service;
 
-import bg.codeacademy.spring.project1.model.Book;
 import bg.codeacademy.spring.project1.model.Comment;
 import bg.codeacademy.spring.project1.repository.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,11 +38,12 @@ public class CommentServiceImpl implements CommentService
     commentRepository.deleteById(commentId);
   }
 
+
   @Override
-  public List<Comment> getAllComments(Book book)
+  public List<Comment> getAllComments(Integer bookId)
   {
 
-    return commentRepository.findAllByBook(book);
+    return commentRepository.findAllByBookId(bookId);
   }
 }
 

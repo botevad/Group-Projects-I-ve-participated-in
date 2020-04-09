@@ -1,18 +1,16 @@
 package bg.codeacademy.spring.project1.service;
 
 
-import bg.codeacademy.spring.project1.dto.ChangePasswordDto;
-import bg.codeacademy.spring.project1.dto.UserDTO;
-import bg.codeacademy.spring.project1.dto.UserRegistration;
 import bg.codeacademy.spring.project1.enums.Role;
 import bg.codeacademy.spring.project1.model.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserService
 {
 
-  User getUser(String userName);
+  Optional<User> getUser(String userName);
 
   void createUser(String userName, String password, Role role);
 
@@ -22,5 +20,5 @@ public interface UserService
 
   List<User> getUsers();
 
-  User getUser(Integer id);
+  Optional<User> getUser(Integer id);
 }

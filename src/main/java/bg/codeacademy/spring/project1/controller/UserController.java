@@ -5,7 +5,6 @@ import bg.codeacademy.spring.project1.dto.UserDTO;
 import bg.codeacademy.spring.project1.dto.UserRegistration;
 import bg.codeacademy.spring.project1.model.User;
 import bg.codeacademy.spring.project1.service.UserService;
-import org.hibernate.annotations.Parameter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -17,6 +16,7 @@ import java.net.URISyntaxException;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Validated
 @RestController
@@ -32,12 +32,13 @@ public class UserController
   }
 
   @GetMapping
-  public List<UserDTO> getUsers() {
+  public List<UserDTO> getUsers()
+  {
     List<User> users = userService.getUsers();
     List<UserDTO> userDtos = new ArrayList<>();
     for (User user : users) {
-      UserDTO userDto = new UserDTO();
-      userDto.username = user.getUsername();
+      UserDTO userDto = new UserDTO()
+          .setUsername(user.getUsername());
       userDtos.add(userDto);
     }
 
@@ -47,10 +48,10 @@ public class UserController
   @GetMapping(value = "/{user}")
   public ResponseEntity<UserDTO> getUser(@PathVariable("user") String userName)
   {
-    User user = userService.getUser(userName);
-    if (user != null) {
-      UserDTO userDto = new UserDTO();
-      userDto.username = userName;
+    Optional<User> user = userService.getUser(userName);
+    if (user.isPresent()) {
+      UserDTO userDto = new UserDTO()
+          .setUsername(userName);
       return ResponseEntity.ok(userDto);
     }
     return ResponseEntity.notFound().build();
@@ -59,11 +60,11 @@ public class UserController
   @PutMapping
   public ResponseEntity<?> createUser(@Valid @RequestBody() UserRegistration userRegistration) throws URISyntaxException
   {
-    if (userService.getUser(userRegistration.username) != null) {
+    if (userService.getUser(userRegistration.getUsername()).isPresent()) {
       return ResponseEntity.status(HttpStatus.CONFLICT).build();
     }
-    userService.createUser(userRegistration.username, userRegistration.password, userRegistration.role);
-    return ResponseEntity.created(new URI("/users/" + userRegistration.username)).build();
+    userService.createUser(userRegistration.getUsername(), userRegistration.getPassword(), userRegistration.getRole());
+    return ResponseEntity.created(new URI("/users/" + userRegistration.getUsername())).build();
   }
 
   @DeleteMapping(value = "/{user}")
@@ -77,7 +78,9 @@ public class UserController
 
   @PostMapping(value = "/{user}/password")
   public @ResponseBody
-  ResponseEntity<?> changePassword(@PathVariable("user") String userName, @Valid @RequestBody ChangePasswordDto changePasswordDto, Principal principal)
+  ResponseEntity<?> changePassword(@PathVariable("user") String userName,
+                                   @Valid @RequestBody ChangePasswordDto changePasswordDto,
+                                   Principal principal)
   {
     if (!userName.equals(principal.getName()) || !userService.changePassword(userName, changePasswordDto.oldPassword, changePasswordDto.newPassword)) {
       return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Wrong password or user name");
