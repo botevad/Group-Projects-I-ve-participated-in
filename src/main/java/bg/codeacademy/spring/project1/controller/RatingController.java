@@ -15,7 +15,7 @@ import java.security.Principal;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1/ratings")
+@RequestMapping("/api/v1/books/{bookId}/ratings")
 public class RatingController
 {
   private final RatingService ratingService;
@@ -31,7 +31,7 @@ public class RatingController
   }
 
   @PostMapping()
-  public ResponseEntity<Void> addRating(@RequestParam Integer bookId, @RequestBody @Valid Rating rating, Principal principal)
+  public ResponseEntity<Void> addRating(@PathVariable Integer bookId, @RequestBody @Valid Rating rating, Principal principal)
   {
 
     Optional<Book> testBook = bookService.getBook(bookId);

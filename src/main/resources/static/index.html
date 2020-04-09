@@ -24,12 +24,15 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
+      <a class="nav-link btn" data-toggle="modal" data-target="#addBookModal">
+        <i class="fa fa-plus"></i>
+      </a>
     </ul>
     <form id="searchBooks" class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
       <button class="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
     </form>
-    <a id="user" class="nav-link btn" data-toggle="modal" data-target="#changePasswordModal">
+    <a class="nav-link btn" data-toggle="modal" data-target="#changePasswordModal">
       <i class="fa fa-user"></i>
     </a>
   </div>
@@ -41,6 +44,46 @@
   </div>
 </div>
 
+
+<div class="modal fade" id="addBookModal" tabindex="-1" role="dialog" aria-labelledby="addBookModalTitle"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addBookModalTitle">Add Book</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="addBookTitle" class="col-form-label">Title:</label>
+            <input type="text" class="form-control" id="addBookTitle" aria-describedby="addBookTitleHelp">
+            <small id="addBookTitleHelp" class="form-text text-muted">Book title.</small>
+          </div>
+          <div class="form-group">
+            <label for="addBookAuthor" class="col-form-label">Author:</label>
+            <input type="text" class="form-control" id="addBookAuthor" aria-describedby="addBookAuthorHelp">
+            <small id="addBookAuthorHelp" class="form-text text-muted">The glorious book writer.</small>
+          </div>
+          <div class="form-group">
+            <label for="addBookYear" class="col-form-label">Year:</label>
+            <input type="text" class="form-control" id="addBookYear" aria-describedby="addBookYearHelp">
+            <small id="addBookYearHelp" class="form-text text-muted">The year, when the book was published.</small>
+          </div>
+        </form>
+        <div class="alert alert-warning" role="alert" style="display:none">
+          Failed! Please check book details!
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" id="addBookButton" class="btn btn-primary">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="changePasswordModalTitle"
      aria-hidden="true">
@@ -84,17 +127,19 @@
 </div>
 
 
-<div class="modal fade" id="bookView" tabindex="-1" role="dialog" aria-labelledby="bookViewTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
+<div class="modal fade" id="bookView" tabindex="-1" role="dialog" aria-labelledby="bookViewTitle" aria-hidden="true" >
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="bookViewTitle">Book View</h5>
+        <h5 class="modal-title" id="bookViewTitle">title</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <small id="bookViewAuthor">Valentin Valchev / 2020</small>
+        <h5>Details:</h5>
+        <p id="bookViewAuthor">author / 2020</p>
+        <h5>Reviews:</h5>
         <div id="bookViewComments" class="list-group">
           <a href="#" class="list-group-item list-group-item-action active">
             <div class="d-flex w-100 justify-content-between">
@@ -135,6 +180,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
+<script src="https://momentjs.com/downloads/moment.min.js"></script>
 <script src="site.js"></script>
 </body>
 </html>
