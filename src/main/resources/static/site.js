@@ -1,7 +1,9 @@
 
 $(function() {
-  $('.navbar-brand').click(getBooks).click();
-  $('#searchBooks').click(function() {
+  $('.navbar-brand').click(function() {
+    getBooks();
+  }).click();
+  $('#searchBooks').submit(function() {
     getBooks($('input').first().val());
     return false;
   });
