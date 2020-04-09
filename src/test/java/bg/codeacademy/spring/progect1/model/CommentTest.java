@@ -5,38 +5,48 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import java.util.Set;
-import static org.testng.Assert.*;
-public class CommentTest {
+
+public class CommentTest
+{
   private static ValidatorFactory validatorFactory;
-  private static Validator validator;
+  private static Validator        validator;
+
   @BeforeClass
-  public static void createValidator() {
+  public static void createValidator()
+  {
     validatorFactory = Validation.buildDefaultValidatorFactory();
     validator = validatorFactory.getValidator();
   }
+
   @AfterClass
-  public static void close() {
+  public static void close()
+  {
     validatorFactory.close();
   }
+
   @Test
-  public void testCommentNull(){
-    Comment comment= new Comment();
+  public void testCommentNull()
+  {
+    Comment comment = new Comment();
     comment.setContent(null);
-    Set<ConstraintViolation<Comment>> violations= validator.validate(comment);
+    Set<ConstraintViolation<Comment>> violations = validator.validate(comment);
     Assert.assertFalse(violations.isEmpty());
-    Assert.assertEquals(violations.size(),1);
+    Assert.assertEquals(violations.size(), 1);
   }
+
   @Test
-  public void testCommentInvalid(){
-    Comment comment= new Comment();
+  public void testCommentInvalid()
+  {
+    Comment comment = new Comment();
     comment.setContent("a");
-    Set<ConstraintViolation<Comment>> violations= validator.validate(comment);
+    Set<ConstraintViolation<Comment>> violations = validator.validate(comment);
     Assert.assertFalse(violations.isEmpty());
-    Assert.assertEquals(violations.size(),1);
+    Assert.assertEquals(violations.size(), 1);
   }
 }

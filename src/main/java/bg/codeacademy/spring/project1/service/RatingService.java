@@ -12,7 +12,7 @@ public interface RatingService
 
   List<Rating> getAllBookRating(Book book);
 
-  Optional<Rating> findByBookAndUser(Integer bookId, Integer userId);
+  Optional<Rating> findByBookIdAndUserId(Integer bookId, Integer userId);
 
   Double getRating(Book book);
 

@@ -1,8 +1,6 @@
 package bg.codeacademy.spring.project1.dto;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class BookDTOWithComments extends BookDTO
@@ -17,7 +15,9 @@ public class BookDTOWithComments extends BookDTO
 
   public List<CommentDTO> getCommentList()
   {
-    return commentList;
+
+    return
+        commentList;
   }
 
   public BookDTOWithComments setCommentList(List<CommentDTO> commentList)
@@ -25,7 +25,6 @@ public class BookDTOWithComments extends BookDTO
     this.commentList = commentList;
     return this;
   }
-
 
 }
 

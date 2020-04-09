@@ -1,37 +1,43 @@
 package bg.codeacademy.spring.project1.model;
 
-import javax.persistence.*;
+import bg.codeacademy.spring.project1.validation.NotHtml;
+
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "comments")
 public class Comment extends IdEntity
 {
-  @Null(message = "Provide content!")
+  @NotNull(message = "Provide content!")
+  @NotHtml
   @Size(min = 2, max = 256, message = "Comment between 2 and 256 characters!")
   private String content;
 
+  private LocalDateTime date = LocalDateTime.now();
+
   @ManyToOne(targetEntity = User.class)
   @JoinColumn(name = "user_id", referencedColumnName = "id")
-  private User          user;
+  private User user;
   @ManyToOne(targetEntity = Book.class)
   @JoinColumn(name = "book_id", referencedColumnName = "id")
-  private Book          book;
-  private LocalDateTime date;
-
+  private Book book;
 
   public Comment()
   {
-    this.date = LocalDateTime.now();
+    // default constructor
   }
 
-  public LocalDateTime getDate()
+  public Comment(String content, User user, Book book)
   {
-    return date;
+    this.content = content;
+    this.user = user;
+    this.book = book;
   }
 
   public String getContent()
@@ -39,19 +45,10 @@ public class Comment extends IdEntity
     return content;
   }
 
-  public void setContent(String content)
+  public Comment setContent(String content)
   {
     this.content = content;
-  }
-
-  public Book getBook()
-  {
-    return book;
-  }
-
-  public void setBook(Book book)
-  {
-    this.book = book;
+    return this;
   }
 
   public User getUser()
@@ -59,9 +56,31 @@ public class Comment extends IdEntity
     return user;
   }
 
-  public void setUser(User user)
+  public Comment setUser(User user)
   {
     this.user = user;
+    return this;
+  }
+
+  public Book getBook()
+  {
+    return book;
+  }
+
+  public Comment setBook(Book book)
+  {
+    this.book = book;
+    return this;
+  }
+
+  public LocalDateTime getDate()
+  {
+    return date;
+  }
+
+  public Comment setDate(LocalDateTime date)
+  {
+    this.date = date;
+    return this;
   }
 }
-

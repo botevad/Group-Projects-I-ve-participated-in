@@ -34,14 +34,15 @@ public class BookDTOTest
   public void testBook()
   {
     BookDTO book = new BookDTO();
+    // invalid - no ID set
     book.setAuthor("1");
     book.setYear(0);
     book.setCountComments(0);
     book.setRating(1.3);
-    book.setTitle("");
+    book.setTitle(""); //invalid - should be [1..60] symbols
     Set<ConstraintViolation<BookDTO>> violations = validator.validate(book);
     Assert.assertFalse(violations.isEmpty());
-    Assert.assertEquals(violations.size(), 5);
+    Assert.assertEquals(violations.size(), 2);
 
   }
 }

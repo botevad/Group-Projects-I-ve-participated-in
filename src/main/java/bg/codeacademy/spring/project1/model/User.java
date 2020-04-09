@@ -2,7 +2,9 @@ package bg.codeacademy.spring.project1.model;
 
 import bg.codeacademy.spring.project1.enums.Role;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
 @Entity
@@ -24,6 +26,14 @@ public class User extends IdEntity
    */
   public User()
   {
+  }
+
+  public User(@NotBlank String username, String password, Role role, boolean isEnabled)
+  {
+    this.username = username;
+    this.password = password;
+    this.role = role;
+    this.isEnabled = isEnabled;
   }
 
   //user created by Admin can have a directly approved state

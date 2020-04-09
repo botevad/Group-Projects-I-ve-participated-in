@@ -11,9 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.List;
+import java.security.Principal;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/ratings")
@@ -32,35 +31,39 @@ public class RatingController
   }
 
   @PostMapping()
-  public ResponseEntity<Void> addRating(@RequestParam @NotNull Integer bookID, @RequestBody @Valid Rating rating, @RequestParam @NotNull Integer userId)
+  public ResponseEntity<Void> addRating(@RequestParam Integer bookId, @RequestBody @Valid Rating rating, Principal principal)
   {
-    if (!bookService.getBook(bookID).isPresent()) {
+
+    Optional<Book> testBook = bookService.getBook(bookId);
+    Optional<User> user = userService.getUser(principal.getName());
+
+    if (!testBook.isPresent() || !user.isPresent()) {
       return ResponseEntity.notFound().build();
     }
     else {
-      Book testBook = bookService.getBook(bookID).get();
-      List<Rating> r = new ArrayList<>();
-      if (!ratingService.getAllBookRating(testBook).isEmpty()) {
-        r = ratingService.getAllBookRating(testBook);
-      }
 
-      User u = userService.getUser(userId);
-
-      if (ratingService.findByBookAndUser(bookID, userId).isPresent()) {
-        ratingService.findByBookAndUser(bookID, userId).get().setRating(rating.getRating());
+      Optional<Rating> r = ratingService.findByBookIdAndUserId(bookId, user.get().getId());
+      if (r.isPresent()) {
+        r.get().setRating(rating.getRating());
+        ratingService.addRating(r.get());
         return ResponseEntity.ok().build();
       }
       else {
-        rating.setBook(testBook);
-        rating.setUser(u);
+        rating.setBook(testBook.get());
+        rating.setUser(user.get());
+        rating.setRating(rating.getRating());
+
         ratingService.addRating(rating);
-        return ResponseEntity.ok().build();
       }
+
+      return ResponseEntity.ok().build();
     }
-
-
   }
 }
+
+
+
+
 
 
 
