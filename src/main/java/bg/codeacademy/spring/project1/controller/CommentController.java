@@ -7,11 +7,11 @@ import bg.codeacademy.spring.project1.model.User;
 import bg.codeacademy.spring.project1.service.BookService;
 import bg.codeacademy.spring.project1.service.CommentService;
 import bg.codeacademy.spring.project1.service.UserService;
-import com.sun.istack.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotNull;
 import java.security.Principal;
 import java.util.*;
 
@@ -34,7 +34,7 @@ public class CommentController
   }
 
   @PostMapping()
-  public ResponseEntity<Void> addComment(@RequestParam Integer bookId,
+  public ResponseEntity<Void> addComment(@PathVariable @NotNull Integer bookId,
                                          @RequestBody Comment comment,
                                          Principal principal)
   {
